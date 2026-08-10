@@ -4,10 +4,10 @@ __pycache__/
 *.pyc
 *.egg-info/
 
-# Sample data (judges have these from DataHub's hackathon page)
-sample-data/*.db
-sample-data/fiction-retail-csv/
-sample-data/healthcare-csv/
+# Sample data - only healthcare kept
+sample-data/fiction-retail*
+sample-data/nyc-taxi*
+# Root DB is generated at runtime
 healthcare.db
 
 # Internal docs (research, competitor analysis, improvement notes)
@@ -34,3 +34,5 @@ snapshots/
 
 # Reports (generated)
 report/
+.vercel
+.env*

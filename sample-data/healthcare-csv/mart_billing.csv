@@ -1,0 +1,201 @@
+name,hospital,insurance_provider,admission_type,billing_amount,date_of_admission,discharge_date,length_of_stay_days,medication,pipeline_status
+"Bobby JacksOn","Sons and Miller","Blue Cross",urgent,18856.2813059782,2024-01-31,2024-02-02,2.0,Paracetamol,staged
+"LesLie TErRy","Kim Inc",Medicare,emergency,33643.3272865779,2019-08-20,2019-08-26,6.0,Ibuprofen,staged
+"DaNnY sMitH","Cook PLC",Aetna,emergency,27955.0960788425,2022-09-22,2022-10-07,15.0,Aspirin,staged
+"andrEw waTtS","Hernandez Rogers and Vang,",Medicare,elective,37909.7824098753,2020-11-18,2020-12-18,30.0,Ibuprofen,staged
+"adrIENNE bEll",White-White,Aetna,urgent,14238.3178139376,2022-09-19,2022-10-09,20.0,Penicillin,staged
+"EMILY JOHNSOn",Nunez-Humphrey,UnitedHealthcare,urgent,48145.1109510419,2023-12-20,2023-12-24,4.0,Ibuprofen,staged
+"edwArD EDWaRDs","Group Middleton",Medicare,emergency,19580.8723448609,2020-11-03,2020-11-15,12.0,Paracetamol,staged
+"CHrisTInA MARtinez","Powell Robinson and Valdez,",Cigna,emergency,45820.4627215946,2021-12-28,2022-01-07,10.0,Paracetamol,staged
+"JASmINe aGuIlaR","Sons Rich and",Cigna,elective,50119.2227915485,2020-07-01,2020-07-14,13.0,Aspirin,staged
+"ChRISTopher BerG",Padilla-Walker,UnitedHealthcare,elective,19784.6310622107,2021-05-23,2021-06-22,30.0,Paracetamol,staged
+"mIchElLe daniELs",Schaefer-Porter,Medicare,urgent,12576.7956090502,2020-04-19,2020-04-22,3.0,Paracetamol,staged
+"aaRon MARtiNeZ",Lyons-Blair,Medicare,urgent,7999.58687960419,2023-08-13,2023-09-05,23.0,Lipitor,staged
+"connOR HANsEn","Powers Miller, and Flores",Cigna,emergency,43282.2833577043,2019-12-12,2019-12-28,16.0,Penicillin,staged
+"rObeRt bAuer",Rivera-Gutierrez,UnitedHealthcare,urgent,33207.7066337296,2020-05-22,2020-06-19,28.0,Lipitor,staged
+"bROOkE brady",Morris-Arellano,UnitedHealthcare,urgent,40701.5992273088,2021-10-08,2021-10-13,5.0,Paracetamol,staged
+"MS. nAtalIE gAMble",Cline-Williams,"Blue Cross",elective,12263.3574250214,2023-01-01,2023-01-11,10.0,Aspirin,staged
+"haley perkins",Cervantes-Wells,UnitedHealthcare,elective,24499.8479037366,2020-06-23,2020-07-14,21.0,Paracetamol,staged
+"mRS. jamiE cAMPBELl","Torres, and Harrison Jones",Cigna,urgent,17440.4654441247,2020-03-08,2020-04-02,25.0,Paracetamol,staged
+"LuKE BuRgEss","Houston PLC","Blue Cross",elective,18843.0230178342,2021-03-04,2021-03-14,10.0,Aspirin,staged
+,"Hammond Ltd",Cigna,elective,23762.2035790596,2022-11-15,2022-11-22,7.0,Penicillin,staged
+"tIMOTHY burNs","Jones LLC","Blue Cross",elective,42.5145885533243,2023-06-28,2023-07-02,4.0,Aspirin,staged
+"ChRISToPHEr BRiGhT",Williams-Davis,Aetna,urgent,17695.9116223438,2020-01-21,2020-02-09,19.0,Lipitor,staged
+"KatHRYn StewArt",Clark-Mayo,Aetna,urgent,5998.10290819591,2022-05-12,2022-06-10,29.0,Lipitor,staged
+"dR. EilEEn thomPsoN","and Sons Smith",Aetna,urgent,25250.0524282161,2021-08-02,2021-08-12,10.0,Lipitor,staged
+"PAUl hEndERsOn","Wilson Group",Medicare,emergency,33211.295419012,2020-05-15,2020-06-08,24.0,Paracetamol,staged
+"PeTER fiTzgeRaLd",Garner-Bowman,Medicare,urgent,19746.8320076044,2020-05-15,2020-05-20,5.0,Aspirin,staged
+"cathy sMaLl","Brown, and Jones Weaver","Blue Cross",elective,26786.5295553113,2023-12-23,2024-01-19,27.0,Ibuprofen,staged
+"mr. KenNEth MoORE",Serrano-Dixon,UnitedHealthcare,emergency,18834.8013411784,2022-06-21,2022-06-30,9.0,Lipitor,staged
+"MaRy hUNter",Gardner-Miller,Cigna,emergency,32643.2993532772,2021-01-03,2021-01-16,13.0,Penicillin,staged
+"jOSHUA OLiVer",Guerrero-Boone,Aetna,elective,5767.01105381602,2023-10-03,2023-10-12,9.0,Paracetamol,staged
+"ThOMAS MartInEZ","Hart Ltd",Cigna,urgent,47909.1288098749,2019-08-18,2019-09-01,14.0,Ibuprofen,staged
+"JAmES pattERson",Cruz-Santiago,UnitedHealthcare,urgent,25835.3235946882,2019-11-03,2019-11-29,26.0,Penicillin,staged
+"WilLIAM cOOPEr","Group Duncan",Medicare,elective,17993.2262000155,2023-05-18,2023-06-15,28.0,Penicillin,staged
+"Erin oRTEga",Lopez-Phillips,Medicare,elective,21185.9535303942,2023-05-24,2023-06-03,10.0,Ibuprofen,staged
+"NicOlE RodriGUEz","Poole Inc","Blue Cross",emergency,8408.94935429195,2020-01-17,2020-02-10,24.0,Lipitor,staged
+"DAvID AndErSON","Sons and Cox",Medicare,elective,45453.4185456651,2021-01-07,2021-01-26,19.0,Lipitor,staged
+"DEnIse ToRRES","LLC Martin",Aetna,urgent,4397.77699541334,2019-10-14,2019-10-19,5.0,Paracetamol,staged
+"CasSAndrA Robinson",Espinoza-Stone,Aetna,urgent,9380.32596752843,2021-12-19,2022-01-16,28.0,Ibuprofen,staged
+"NIcOlE LUcErO","and Garcia Morris Cunningham,",Cigna,emergency,48290.6934073642,2022-03-12,2022-03-29,17.0,Lipitor,staged
+"PAmela fErNanDeZ",Walton-Meyer,Medicare,urgent,32973.9408329663,2021-01-17,2021-01-29,12.0,Penicillin,staged
+"chRiSTOPHer LEe","PLC Young",Cigna,emergency,49943.2784987873,2021-09-15,2021-10-05,20.0,Lipitor,staged
+,"Meadows Group",Cigna,urgent,35633.9554543878,2020-01-27,2020-02-09,13.0,Aspirin,staged
+"Mr. eRiC Lane","and Howell Brooks, Rogers",Cigna,elective,25966.328610221,2022-06-24,2022-07-18,24.0,Paracetamol,staged
+"KAThEriNE SmiTH","and Mcclure White Boone,",UnitedHealthcare,urgent,21784.4450707237,2021-06-09,2021-07-01,22.0,Paracetamol,staged
+"pAUL wILLiAmS","Gates Brown, and Stuart",Medicare,urgent,42684.5588845503,2020-08-23,2020-09-08,16.0,Penicillin,staged
+"lYNn MaRtinez","Group Armstrong",Medicare,emergency,45585.8865599394,2022-10-12,2022-11-02,21.0,Penicillin,staged
+"chRIsTOpHEr CHaPmAN","Ltd Schwartz",Cigna,elective,29615.4418636462,2021-12-01,2021-12-09,8.0,Paracetamol,staged
+"CHRis fRYe",Nelson-Phillips,Cigna,urgent,36992.2736882839,2020-05-04,2020-05-13,9.0,Aspirin,staged
+"kyLE bEnneTT","Knight and Nguyen, Riggs",UnitedHealthcare,urgent,28051.4994839463,2023-09-09,2023-09-23,14.0,Ibuprofen,staged
+"BRandOn coLLINS","Lopez PLC",Cigna,urgent,16320.2324472719,2019-07-19,2019-07-29,10.0,Ibuprofen,staged
+"mIchael LiU","Fernandez and Phillips, Singh",Medicare,emergency,30590.5418063407,2024-04-05,2024-04-22,17.0,Paracetamol,staged
+"STepHaNie kEnt",Beck-Galloway,Aetna,emergency,14681.0163601259,2019-06-15,2019-07-05,20.0,Ibuprofen,staged
+"JessE BaNks","Decker Glover, and Christensen",Aetna,urgent,21879.5319110636,2022-10-29,2022-11-20,22.0,Penicillin,staged
+"PeGGY LEe","Nelson Walker Myers, and",UnitedHealthcare,elective,6767.63439654495,2022-04-08,2022-04-13,5.0,Lipitor,staged
+"TAmARa hErNAndez",Mitchell-Navarro,Cigna,elective,19973.4629261596,2023-08-17,2023-09-11,25.0,Ibuprofen,staged
+"mR. DAVID pIERce Md","Group Delgado",UnitedHealthcare,emergency,14362.3144875023,2023-11-05,2023-11-07,2.0,Paracetamol,staged
+"beThaNY MoOrE","and Montes Graves, Thomas",Cigna,emergency,10300.6573113759,2023-04-09,2023-04-21,12.0,Paracetamol,staged
+"MIChael MIllS",Hall-Bentley,Aetna,emergency,37951.6649098498,2022-09-21,2022-09-25,4.0,Ibuprofen,staged
+"kyle Wiley",Taylor-Nguyen,Aetna,urgent,6733.99094706883,2021-01-21,2021-02-06,16.0,Ibuprofen,staged
+"jACqUeLINE jORdaN",Hunter-Grant,Aetna,elective,17839.7456516472,2020-07-10,2020-07-20,10.0,Paracetamol,staged
+"ASHleY guTIERreZ",Miller-Lawson,Aetna,elective,24637.0900640332,2019-11-06,2019-11-22,16.0,Paracetamol,staged
+"Kim ScOtt",Scott-Kelly,UnitedHealthcare,emergency,39723.1660514279,2024-04-07,2024-05-04,27.0,Ibuprofen,staged
+"tRAvIs carTeR","Moss and Ferguson, Baker",UnitedHealthcare,emergency,48407.3862911005,2022-07-06,2022-07-18,12.0,Aspirin,staged
+"LArry rodgeRs","and Mason Smith Chase,",Cigna,elective,5517.39364222399,2022-08-03,2022-08-10,7.0,Aspirin,staged
+"Nancy glOVeR","Khan, and Rodriguez Fischer",Medicare,emergency,19183.1688853955,2020-05-08,2020-06-01,24.0,Aspirin,staged
+"JessIca king","Sons Watson and",Medicare,urgent,8320.66080328744,2019-12-09,2019-12-21,12.0,Lipitor,staged
+"ChRiStOPhER gOnzAlez",Rhodes-Carey,Medicare,emergency,10107.1876510572,2019-11-21,2019-12-08,17.0,Penicillin,staged
+"jOhN hARTmAN",Bullock-Ramsey,Cigna,elective,49402.2983725271,2023-01-07,2023-01-27,20.0,Lipitor,staged
+"MicHAEl MillEr","Clark Brown, and Myers",UnitedHealthcare,emergency,35776.8151114538,2024-02-06,2024-02-10,4.0,Penicillin,staged
+"Erica myERS","Jackson and Lane, Dillon",Medicare,elective,20227.8637267448,2020-01-30,2020-02-12,13.0,Penicillin,staged
+"cAROl PaTtERSoN","Turner Cook, Banks and","Blue Cross",urgent,19328.1185790799,2022-10-24,2022-11-07,14.0,Ibuprofen,staged
+"JOSe LopEz","Miles, and Weaver Hudson",Aetna,emergency,46956.5457306325,2022-01-09,2022-01-15,6.0,Aspirin,staged
+"kEVIn SiMmoNs Jr.","Evans Ltd",Cigna,emergency,10709.6903889002,2023-12-28,2024-01-02,5.0,Paracetamol,staged
+"DuANe HaneY","Sons and Schaefer",Aetna,urgent,45353.9907773854,2021-09-16,2021-10-14,28.0,Penicillin,staged
+"JONathAn yaTeS","Sons Hodges and",Aetna,elective,8451.00175847895,2023-07-24,2023-08-11,18.0,Paracetamol,staged
+"johN THoMaS",Simpson-Mccall,UnitedHealthcare,emergency,29850.8797281838,2021-11-13,2021-12-07,24.0,Paracetamol,staged
+"AdriaN BuckLEY","Lin Thompson Wells, and","Blue Cross",urgent,42696.5211638992,2023-10-11,2023-10-27,16.0,Penicillin,staged
+"apRil SANTIAgO",Jones-Scott,Cigna,emergency,2305.13913953849,2021-01-30,2021-02-04,5.0,Penicillin,staged
+"DIane scHultz",Howe-Kelly,UnitedHealthcare,emergency,44437.4706733572,2021-11-21,2021-12-05,14.0,Penicillin,staged
+"tiMOThY myers","and Sons Reyes",UnitedHealthcare,urgent,29504.3874422115,2024-03-02,2024-03-26,24.0,Ibuprofen,staged
+"NICOLE HUGhes",Shaw-Young,"Blue Cross",emergency,34617.7883449372,2020-12-04,2020-12-08,4.0,Ibuprofen,staged
+"ChAd MorEnO","Inc Skinner",Aetna,urgent,46814.0111951117,2020-08-26,2020-08-27,1.0,Penicillin,staged
+"SeaN jenniNGs",Clark-Johnson,"Blue Cross",elective,20257.5442829324,2023-11-12,2023-12-12,30.0,Penicillin,staged
+"DIAnE brAnch","Perez and Sons",Cigna,emergency,22841.3638769057,2020-05-30,2020-06-14,15.0,Aspirin,staged
+"cindY OROzco","Kemp LLC",Medicare,emergency,10283.7168581292,2023-05-12,2023-06-10,29.0,Ibuprofen,staged
+"pAtriCIa MEdinA","LLC Dixon",UnitedHealthcare,emergency,1586.47660143828,2022-07-07,2022-07-23,16.0,Ibuprofen,staged
+"kayLa padillA","and Morales Jennings Cook,",Aetna,emergency,34774.3511270576,2020-09-24,2020-10-08,14.0,Penicillin,staged
+"JUan klEiN","Group Hood",UnitedHealthcare,emergency,24870.1036589338,2023-08-19,2023-08-25,6.0,Ibuprofen,staged
+"wILLIAM hIlL","Lindsey Inc",Cigna,elective,39476.94751438,2023-05-16,2023-06-01,16.0,Aspirin,staged
+"CARL BEst","Ltd Wang","Blue Cross",elective,26062.434320291,2022-08-22,2022-09-07,16.0,Paracetamol,staged
+"TInA GriFfin","Inc Ford",Medicare,elective,25302.1126340112,2022-06-17,2022-06-28,11.0,Penicillin,staged
+"MR. TYler TAYLOR Phd",Dean-Hawkins,UnitedHealthcare,emergency,10661.5106491328,2022-11-05,2022-11-25,20.0,Lipitor,staged
+"TAyLoR howeLl Dds","Walter PLC","Blue Cross",elective,30358.1945795447,2021-09-10,2021-09-18,8.0,Ibuprofen,staged
+"mIcHAeL MaRTIn","Sons Horn and",Cigna,urgent,23684.5254727448,2022-09-06,2022-09-27,21.0,Ibuprofen,staged
+"heatHER mIller","Powell Ward, and Mercado",Aetna,elective,3908.94656794631,2021-04-17,2021-05-10,23.0,Lipitor,staged
+"cathERinE gArDnEr","James Ltd",Medicare,elective,25503.673806852,2019-08-19,2019-08-26,7.0,Lipitor,staged
+"ANNE THOMPSoN",Kemp-Munoz,Aetna,elective,6312.60769101852,2024-03-24,2024-04-14,21.0,Aspirin,staged
+"TOdd coopeR",Henderson-Taylor,UnitedHealthcare,elective,21772.3413986496,2022-12-10,2022-12-31,21.0,Ibuprofen,staged
+"PhILLIP lyOnS","Parsons, Hartman Martinez and","Blue Cross",elective,30437.0017876411,2022-09-14,2022-09-18,4.0,Aspirin,staged
+"MaRk foRD","Luna Inc",UnitedHealthcare,elective,28837.6770525072,2022-10-18,2022-11-11,24.0,Aspirin,staged
+"mARcUS ZAmorA","Hernandez, Ritter and Huffman",Cigna,elective,25425.7278626071,2021-11-13,2021-11-21,8.0,Aspirin,staged
+"KaTiE hENry","Reed LLC",Aetna,emergency,7187.27234609951,2022-07-08,2022-07-25,17.0,Aspirin,staged
+"wilLIAm morTON",Thompson-Walker,UnitedHealthcare,urgent,3125.73647660125,2023-06-25,2023-07-11,16.0,Ibuprofen,staged
+"KaTRina maRTin","Group Nguyen",Medicare,elective,31516.1007343744,2019-07-09,2019-08-05,27.0,Penicillin,staged
+"HunTeR mckAy",Newton-White,UnitedHealthcare,emergency,40014.7623484579,2021-05-14,2021-06-03,20.0,Aspirin,staged
+"dWAYnE DAViS","Ltd Thomas",Medicare,elective,40782.9278084866,2024-01-15,2024-02-07,23.0,Ibuprofen,staged
+"sARAH CalDweLL","Pierce Ward, Torres and",Cigna,elective,3879.08460181339,2019-09-30,2019-10-15,15.0,Aspirin,staged
+"DAVid higgInS","Evans and Hall Schneider,",Medicare,emergency,24948.4778240269,2021-03-05,2021-03-20,15.0,Penicillin,staged
+"bRADlEY coMbS",Stout-Brown,Cigna,elective,37734.742180387,2021-05-14,2021-06-06,23.0,Penicillin,staged
+"chrisTiNa SChMitt","Cruz Ltd",UnitedHealthcare,elective,27360.4618905513,2023-06-08,2023-07-05,27.0,Ibuprofen,staged
+"coLtoN stRONg","Stewart Sons and",Aetna,elective,37405.6965286312,2022-05-13,2022-05-20,7.0,Paracetamol,staged
+"MARK priCE","Hall Roberts and Duarte,",Medicare,emergency,31485.9731617159,2022-09-22,2022-10-14,22.0,Ibuprofen,staged
+"sUZaNnE SchNeIder",Ramirez-Robinson,Medicare,urgent,23737.3993236271,2023-08-25,2023-09-18,24.0,Lipitor,staged
+"MIchaEL HUrLEY","Garcia, and Bishop Hernandez",Aetna,emergency,3326.38267468152,2019-06-02,2019-06-04,2.0,Lipitor,staged
+"LIndsEy laMbErt","and Brown Oneal, Shah",Medicare,elective,23067.6721652454,2021-11-19,2021-12-12,23.0,Ibuprofen,staged
+"reBEcCA PARsONs","Group White",Aetna,elective,8521.21425267109,2019-12-02,2019-12-13,11.0,Penicillin,staged
+"jUdy joHNsoN","Hughes and Erickson, Anderson",Cigna,elective,47985.1673383278,2020-09-06,2020-08-21,-16.0,Penicillin,staged
+"TOnyA caMpbell",Lane-Kelly,UnitedHealthcare,elective,25230.2468818024,2021-02-12,2021-03-11,27.0,Ibuprofen,staged
+"JAMEs Ross",Cox-Hester,"Blue Cross",urgent,10352.2084867409,2024-01-13,2024-01-22,9.0,Aspirin,staged
+"SaRA COOk","Jarvis Scott, Fleming and",Medicare,urgent,6175.86724929243,2021-12-26,2022-01-12,17.0,Aspirin,staged
+"annE howeLl",Cline-Carpenter,"Blue Cross",urgent,23499.9362509788,2022-08-22,2022-09-07,16.0,Penicillin,staged
+"RENEE bAilEY","Johnson, and Ross Harris",Medicare,elective,33681.5726441016,2021-07-03,2021-07-31,28.0,Ibuprofen,staged
+"Jeffrey tuRNER","Kim Rosario, and Hammond",Aetna,urgent,39957.9406222298,2020-05-31,2020-06-01,1.0,Ibuprofen,staged
+"DR. LaUreN ClaRk DDs","PLC Jimenez",UnitedHealthcare,elective,49833.7077178545,2020-10-26,2020-11-17,22.0,Lipitor,staged
+"terRY THoMaS",Cantu-Berry,Aetna,urgent,48175.4661168079,2021-06-03,2021-07-01,28.0,Paracetamol,staged
+"JasOn baKEr",Wright-Alexander,UnitedHealthcare,urgent,40133.9673924552,2020-10-24,2020-11-13,20.0,Ibuprofen,staged
+"JEssicA gUtiERrEz",Guzman-Carlson,Aetna,urgent,9585.95212799373,2019-08-27,2019-09-06,10.0,Lipitor,staged
+"COURTNey HOdGes",Meyer-Hill,Medicare,emergency,40693.3542239535,2021-11-30,2021-12-09,9.0,Aspirin,staged
+"ANthONy reYEs",Dudley-Atkinson,UnitedHealthcare,emergency,16399.2657610018,2023-10-15,2023-11-08,24.0,Penicillin,staged
+"LeaH cRoSs Dds",Kelly-Allen,"Blue Cross",emergency,44939.5655247611,2024-03-17,2024-03-28,11.0,Ibuprofen,staged
+"PaUL MaRTinEz","Lewis Livingston, Lowe and","Blue Cross",emergency,10663.9100050386,2019-10-13,2019-10-16,3.0,Aspirin,staged
+"DenisE rOdRIGuEZ","Rodriguez Ltd",Cigna,elective,22564.7879835173,2020-03-02,2020-03-07,5.0,Paracetamol,staged
+"ashLEy ERIcKSoN","and Johnson Moore, Branch",Aetna,urgent,-502.507812700948,2019-11-05,2019-11-23,18.0,Penicillin,staged
+"SEaN carDenaS","Holmes and Hughes, Phillips",Cigna,emergency,34758.256750986,2021-02-07,2021-03-05,26.0,Aspirin,staged
+"aLaN AlVaREz","and Smith, Tucker Cross",UnitedHealthcare,urgent,46377.8651492316,2021-10-25,2021-11-22,28.0,Lipitor,staged
+"JeSsICA phiLliPS","Sons and Lozano","Blue Cross",elective,7555.77296480885,2022-07-24,2022-07-31,7.0,Paracetamol,staged
+"tiMOthY CoLemaN","Russell Ltd",UnitedHealthcare,emergency,14299.9934469067,2020-03-04,2020-03-05,1.0,Lipitor,staged
+"cHristina wooDS","Jones Ltd",Cigna,elective,46429.5082037226,2021-08-01,2021-08-19,18.0,Paracetamol,staged
+"mELIssa sCOtt",Gordon-Ward,Medicare,elective,17978.9507448961,2020-01-24,2020-02-12,19.0,Ibuprofen,staged
+"GaRy hoPkiNS","Barnes and Sons",Medicare,elective,32629.0677482353,2021-07-30,2021-08-13,14.0,Paracetamol,staged
+"aPRIL VAleNCIA",Levine-Miller,Medicare,urgent,22356.2264918334,2024-01-04,2024-02-03,30.0,Aspirin,staged
+"riTA archER","and Marquez Silva Smith,",Medicare,elective,48995.9805916572,2024-01-05,2024-02-04,30.0,Lipitor,staged
+"kIm PenA",Jackson-Copeland,UnitedHealthcare,emergency,4532.48355361687,2020-08-11,2020-09-04,24.0,Lipitor,staged
+"jaSoN FOlEy","Perez and Ochoa White,",Medicare,elective,35521.5821482776,2022-06-17,2022-06-24,7.0,Paracetamol,staged
+"ShAUN GuzmAn","Ltd Conrad",Aetna,emergency,1589.50352318586,2022-04-02,2022-04-09,7.0,Aspirin,staged
+"MATTHeW wHite",Hampton-Thomas,Medicare,elective,22950.6511391826,2020-06-03,2020-06-22,19.0,Ibuprofen,staged
+"aLExiS wilsOn",Thomas-Kelley,Aetna,urgent,2678.9539360591,2019-08-16,2019-08-21,5.0,Paracetamol,staged
+"JaCQueLiNE maRshAll",Myers-Monroe,UnitedHealthcare,urgent,39615.6006557047,2024-02-22,2024-02-24,2.0,Penicillin,staged
+"RoBErt hIGGInS","and Ford Lee, Rodriguez",Medicare,elective,13355.7820854809,2021-05-06,2021-05-29,23.0,Ibuprofen,staged
+"SierRa MoRTON","Sons Garcia and",Aetna,elective,32561.5304064227,2021-11-04,2021-10-27,-8.0,Ibuprofen,staged
+"nATAliE sTANtoN","Perry Little, and Moore",Medicare,emergency,29221.3402076791,2020-09-01,2020-09-17,16.0,Paracetamol,staged
+"jEssica aceveDo","Anderson Group",Medicare,urgent,12880.6524127715,2021-05-26,2021-06-22,27.0,Penicillin,staged
+"JENnIfEr mCmillan","Rodriguez and Sons",Aetna,elective,15475.4032365425,2022-06-22,2022-07-22,30.0,Ibuprofen,staged
+"ChRISTopher mccLAiN",Thomas-Huber,Medicare,elective,27309.4367606973,2023-05-17,2023-05-31,14.0,Aspirin,staged
+"kevIn HiCKs","Robinson Inc",Medicare,elective,-1897.89172714768,2021-06-23,2021-07-09,16.0,Ibuprofen,staged
+"MELIndA richARds",Wood-Mathews,Aetna,urgent,31308.2060084951,2023-11-17,2023-11-25,8.0,Penicillin,staged
+"roBYn miRaNDa","Walker and Gardner Fernandez,",Medicare,elective,42792.2412821749,2020-10-11,2020-10-21,10.0,Ibuprofen,staged
+"scoTt caSTillO","Smith and Johnston, Collins",Cigna,emergency,14377.3343184946,2021-08-10,2021-08-27,17.0,Penicillin,staged
+"jOHN GarciA","Sons Miller and",UnitedHealthcare,urgent,1150.87498608758,2023-08-29,2023-09-07,9.0,Penicillin,staged
+"miCHAeL TayloR",Donaldson-Frey,Medicare,elective,41939.1199366963,2020-02-27,2020-03-26,28.0,Ibuprofen,staged
+"jeFfReY WoOd",Brown-Yoder,UnitedHealthcare,elective,41982.3743962326,2021-07-07,2021-07-15,8.0,Aspirin,staged
+"MiCHAEl smIth","Morgan Rios and Keller,",Cigna,elective,33861.0186317447,2022-06-03,2022-06-27,24.0,Aspirin,staged
+"wiLLiam grIFfItH",Gonzalez-King,Aetna,emergency,49321.1576314918,2020-02-20,2020-03-01,10.0,Penicillin,staged
+"CHrISTiNa lAwReNCe","Wagner Ltd",Cigna,elective,47433.2786547112,2021-02-05,2021-03-05,28.0,Penicillin,staged
+"jeSsiCA HolmeS","and Brown White, Jones",Medicare,emergency,19065.060885517,2020-10-24,2020-11-02,9.0,Paracetamol,staged
+"traCEY grEenE",James-Smith,Cigna,elective,50142.026947853,2023-12-06,2023-12-19,13.0,Ibuprofen,staged
+"aMAnda lOpeZ","Hanson Group",Aetna,urgent,12081.679034665,2021-12-21,2021-12-30,9.0,Lipitor,staged
+"LaurA pEtErS",Mcclain-Reed,Aetna,elective,18030.7907802357,2023-09-03,2023-09-30,27.0,Lipitor,staged
+"LAUrEn ANDErSOn",Young-Smith,Medicare,elective,5142.16376347469,2020-10-18,2020-11-10,23.0,Paracetamol,staged
+"wILliAm CAmpos",Hart-Brock,UnitedHealthcare,elective,19851.2429251885,2021-07-07,2021-07-24,17.0,Penicillin,staged
+"jEssiCa GoNzAleS","Jones and Jones, Turner",Cigna,urgent,20545.8717628299,2023-08-28,2023-09-16,19.0,Penicillin,staged
+"brUcE gOnzaleS",Spears-Shah,Cigna,urgent,36869.7257390398,2019-11-17,2019-12-01,14.0,Penicillin,staged
+"rOBert WAlsH","and Anderson Smith Sanchez,",Cigna,elective,40598.4225708787,2020-11-22,2020-12-17,25.0,Paracetamol,staged
+"lIsA LeWis","Tran, and Ferrell Garcia",Aetna,urgent,18198.0585178539,2021-11-13,2021-12-08,25.0,Ibuprofen,staged
+"WiLlIaM RUiZ","Ltd Walton","Blue Cross",elective,4920.0411890887,2022-02-13,2022-02-20,7.0,Paracetamol,staged
+"StEven BALdWIn","Group Rodriguez",UnitedHealthcare,urgent,3864.13949887163,2019-05-16,2019-05-31,15.0,Aspirin,staged
+"meGAn CoLON","Carr LLC","Blue Cross",urgent,21562.8610510204,2021-08-04,2021-08-26,22.0,Paracetamol,staged
+"kImbErlY brOoks",Rodriguez-Guerra,Medicare,elective,11815.2027414877,2020-01-03,2020-01-27,24.0,Ibuprofen,staged
+"EdWARd SMiTh jR.","Sullivan Mullins, Macias and",Cigna,urgent,25796.8696692934,2022-09-13,2022-10-07,24.0,Lipitor,staged
+"aLliSoN CorDoVA","Ballard PLC",UnitedHealthcare,emergency,4266.78430718752,2020-12-19,2021-01-09,21.0,Lipitor,staged
+"lINdA THOMAs",Liu-Wilson,Cigna,urgent,4751.16274103238,2023-03-31,2023-04-29,29.0,Penicillin,staged
+"paRkEr moOrE","LLC Lewis",Aetna,emergency,17968.49598759,2020-05-08,2020-05-28,20.0,Lipitor,staged
+"tanya SOto","Stokes Chambers and Martin,",Cigna,urgent,11311.3273479976,2023-07-31,2023-08-02,2.0,Lipitor,staged
+"mIChaEL jOrdaN",Hernandez-Green,"Blue Cross",emergency,47242.224297681,2022-01-09,2022-01-12,3.0,Ibuprofen,staged
+"ChRiSTINA MArTin","Inc Lee",Cigna,elective,17670.5052173935,2023-12-16,2024-01-15,30.0,Paracetamol,staged
+"TrACy BUrke","Wilkins Group",Medicare,elective,5714.74801791467,2020-12-05,2020-12-18,13.0,Lipitor,staged
+"daVID SPeNCE","Valentine Ltd",Cigna,urgent,5985.97848724019,2021-11-11,2021-12-04,23.0,Penicillin,staged
+"JOsEph fOstER",Alvarado-Deleon,"Blue Cross",emergency,27385.7362279881,2019-09-11,2019-09-15,4.0,Penicillin,staged
+"NIcholAs haLl","Alexander and Jensen Andrews,",UnitedHealthcare,urgent,3730.00219089663,2020-12-15,2021-01-01,17.0,Ibuprofen,staged
+"ChriSTiNA maCiAS","and Black, Henson Rhodes","Blue Cross",elective,22480.9659289307,2022-12-08,2023-01-02,25.0,Ibuprofen,staged
+"scoTT JoNes","Sons and Marshall",Aetna,elective,-35022.3167123606,2021-07-15,2021-08-05,21.0,Aspirin,staged
+"jaMEs AnDerSon",Rodriguez-Franco,"Blue Cross",urgent,45072.418258941,2022-06-16,2022-07-04,18.0,Lipitor,staged
+"sHaUN LonG","Fritz Henderson Stanton, and",UnitedHealthcare,urgent,45902.7076446902,2024-02-09,2024-02-19,10.0,Aspirin,staged
+"krIStInA morA",West-Young,Medicare,emergency,28899.1857587484,2024-03-04,2024-03-18,14.0,Paracetamol,staged
+"joshUa rIcHmOnd","Ltd Solis","Blue Cross",elective,39003.181438095,2022-02-11,2022-02-25,14.0,Lipitor,staged
+"Mark lAWrencE",Mcneil-Blake,"Blue Cross",emergency,10348.8185214386,2022-02-08,2022-02-17,9.0,Ibuprofen,staged
+"JOhN eLlis",Moore-Waters,UnitedHealthcare,urgent,14371.5396986661,2023-06-15,2023-06-30,15.0,Paracetamol,staged
+"MRs. TiFFAny DeNnIs","Group Scott",UnitedHealthcare,urgent,13769.4031287638,2021-10-11,2021-10-24,13.0,Ibuprofen,staged
+"cyNTHIa HuANG","and Simmons Sons",Aetna,elective,35868.5386367656,2021-12-12,2021-12-30,18.0,Lipitor,staged
+"meLiSSA LawRENcE","Humphrey and Browning Fitzgerald,","Blue Cross",emergency,35205.2845980245,2023-07-09,2023-07-15,6.0,Lipitor,staged

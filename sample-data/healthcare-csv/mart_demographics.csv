@@ -1,0 +1,201 @@
+name,age,gender,blood_type,medical_condition,hospital,test_results,pipeline_status
+"Bobby JacksOn",30,male,b-,cancer,"Sons and Miller",normal,staged
+"LesLie TErRy",62,male,a+,obesity,"Kim Inc",inconclusive,staged
+"DaNnY sMitH",76,female,a-,obesity,"Cook PLC",normal,staged
+"andrEw waTtS",28,female,o+,diabetes,"Hernandez Rogers and Vang,",abnormal,staged
+"adrIENNE bEll",43,female,ab+,cancer,White-White,abnormal,staged
+"EMILY JOHNSOn",36,male,a+,asthma,Nunez-Humphrey,normal,staged
+"edwArD EDWaRDs",21,female,ab-,diabetes,"Group Middleton",inconclusive,staged
+"CHrisTInA MARtinez",20,female,a+,cancer,"Powell Robinson and Valdez,",inconclusive,staged
+"JASmINe aGuIlaR",82,male,ab+,asthma,"Sons Rich and",abnormal,staged
+"ChRISTopher BerG",58,female,ab-,cancer,Padilla-Walker,inconclusive,staged
+"mIchElLe daniELs",72,male,o+,cancer,Schaefer-Porter,normal,staged
+"aaRon MARtiNeZ",38,female,a-,hypertension,Lyons-Blair,inconclusive,staged
+"connOR HANsEn",75,female,a+,diabetes,"Powers Miller, and Flores",abnormal,staged
+"rObeRt bAuer",68,female,ab+,asthma,Rivera-Gutierrez,normal,staged
+"bROOkE brady",44,female,ab+,cancer,Morris-Arellano,normal,staged
+"MS. nAtalIE gAMble",46,female,ab-,obesity,Cline-Williams,inconclusive,staged
+"haley perkins",63,female,a+,arthritis,Cervantes-Wells,normal,staged
+"mRS. jamiE cAMPBELl",38,male,ab-,obesity,"Torres, and Harrison Jones",abnormal,staged
+"LuKE BuRgEss",34,female,a-,hypertension,"Houston PLC",abnormal,staged
+,63,male,b+,asthma,"Hammond Ltd",normal,staged
+"tIMOTHY burNs",67,female,a-,asthma,"Jones LLC",normal,staged
+"ChRISToPHEr BRiGhT",48,male,b+,asthma,Williams-Davis,normal,staged
+"KatHRYn StewArt",58,female,o+,arthritis,Clark-Mayo,inconclusive,staged
+"dR. EilEEn thomPsoN",59,male,a+,asthma,"and Sons Smith",inconclusive,staged
+"PAUl hEndERsOn",72,female,ab+,hypertension,"Wilson Group",inconclusive,staged
+"PeTER fiTzgeRaLd",73,male,ab+,obesity,Garner-Bowman,abnormal,staged
+"cathy sMaLl",51,female,o-,asthma,"Brown, and Jones Weaver",normal,staged
+"mr. KenNEth MoORE",34,female,a+,diabetes,Serrano-Dixon,abnormal,staged
+"MaRy hUNter",38,female,o-,hypertension,Gardner-Miller,normal,staged
+"jOSHUA OLiVer",63,female,b+,hypertension,Guerrero-Boone,abnormal,staged
+"ThOMAS MartInEZ",34,male,b-,asthma,"Hart Ltd",inconclusive,staged
+"JAmES pattERson",23,female,a+,arthritis,Cruz-Santiago,abnormal,staged
+"WilLIAM cOOPEr",78,male,ab-,arthritis,"Group Duncan",normal,staged
+"Erin oRTEga",43,male,ab-,cancer,Lopez-Phillips,normal,staged
+"NicOlE RodriGUEz",30,female,ab+,diabetes,"Poole Inc",normal,staged
+"DAvID AndErSON",25,female,ab+,asthma,"Sons and Cox",abnormal,staged
+"DEnIse ToRRES",33,male,ab+,diabetes,"LLC Martin",inconclusive,staged
+"CasSAndrA Robinson",26,female,b-,hypertension,Espinoza-Stone,normal,staged
+"NIcOlE LUcErO",70,female,o-,diabetes,"and Garcia Morris Cunningham,",abnormal,staged
+"PAmela fErNanDeZ",57,female,b-,obesity,Walton-Meyer,abnormal,staged
+"chRiSTOPHer LEe",74,female,b-,hypertension,"PLC Young",normal,staged
+,81,male,a+,hypertension,"Meadows Group",normal,staged
+"Mr. eRiC Lane",49,female,a-,asthma,"and Howell Brooks, Rogers",normal,staged
+"KAThEriNE SmiTH",26,female,ab+,obesity,"and Mcclure White Boone,",normal,staged
+"pAUL wILLiAmS",81,female,ab-,cancer,"Gates Brown, and Stuart",abnormal,staged
+"lYNn MaRtinez",65,male,o+,cancer,"Group Armstrong",normal,staged
+"chRIsTOpHEr CHaPmAN",31,female,o+,hypertension,"Ltd Schwartz",normal,staged
+"CHRis fRYe",58,male,a-,diabetes,Nelson-Phillips,normal,staged
+"kyLE bEnneTT",22,male,o+,hypertension,"Knight and Nguyen, Riggs",abnormal,staged
+"BRandOn coLLINS",77,female,o+,asthma,"Lopez PLC",abnormal,staged
+"mIchael LiU",30,male,ab-,hypertension,"Fernandez and Phillips, Singh",inconclusive,staged
+"STepHaNie kEnt",42,female,a-,cancer,Beck-Galloway,abnormal,staged
+"JessE BaNks",67,female,ab+,cancer,"Decker Glover, and Christensen",inconclusive,staged
+"PeGGY LEe",24,female,a-,obesity,"Nelson Walker Myers, and",abnormal,staged
+"TAmARa hErNAndez",84,female,b-,asthma,Mitchell-Navarro,inconclusive,staged
+"mR. DAVID pIERce Md",73,female,a-,hypertension,"Group Delgado",inconclusive,staged
+"beThaNY MoOrE",55,female,a+,cancer,"and Montes Graves, Thomas",normal,staged
+"MIChael MIllS",23,male,o-,hypertension,Hall-Bentley,inconclusive,staged
+"kyle Wiley",40,female,ab-,cancer,Taylor-Nguyen,normal,staged
+"jACqUeLINE jORdaN",51,male,o+,hypertension,Hunter-Grant,abnormal,staged
+"ASHleY guTIERreZ",83,male,ab+,obesity,Miller-Lawson,inconclusive,staged
+"Kim ScOtt",63,male,a-,asthma,Scott-Kelly,inconclusive,staged
+"tRAvIs carTeR",18,male,a+,cancer,"Moss and Ferguson, Baker",normal,staged
+"LArry rodgeRs",23,female,b-,hypertension,"and Mason Smith Chase,",inconclusive,staged
+"Nancy glOVeR",58,male,a-,hypertension,"Khan, and Rodriguez Fischer",abnormal,staged
+"JessIca king",27,male,ab-,cancer,"Sons Watson and",abnormal,staged
+"ChRiStOPhER gOnzAlez",59,male,b+,diabetes,Rhodes-Carey,abnormal,staged
+"jOhN hARTmAN",27,male,b-,hypertension,Bullock-Ramsey,inconclusive,staged
+"MicHAEl MillEr",31,male,b+,diabetes,"Clark Brown, and Myers",normal,staged
+"Erica myERS",19,female,a+,arthritis,"Jackson and Lane, Dillon",normal,staged
+"cAROl PaTtERSoN",29,female,o+,cancer,"Turner Cook, Banks and",normal,staged
+"JOSe LopEz",18,male,a-,obesity,"Miles, and Weaver Hudson",inconclusive,staged
+"kEVIn SiMmoNs Jr.",24,male,ab-,cancer,"Evans Ltd",abnormal,staged
+"DuANe HaneY",27,male,ab-,diabetes,"Sons and Schaefer",abnormal,staged
+"JONathAn yaTeS",57,female,ab-,arthritis,"Sons Hodges and",abnormal,staged
+"johN THoMaS",74,female,a+,arthritis,Simpson-Mccall,inconclusive,staged
+"AdriaN BuckLEY",22,female,a-,arthritis,"Lin Thompson Wells, and",normal,staged
+"apRil SANTIAgO",33,female,b-,diabetes,Jones-Scott,inconclusive,staged
+"DIane scHultz",57,male,b+,arthritis,Howe-Kelly,inconclusive,staged
+"tiMOThY myers",61,male,b+,cancer,"and Sons Reyes",inconclusive,staged
+"NICOLE HUGhes",20,male,o+,arthritis,Shaw-Young,abnormal,staged
+"ChAd MorEnO",67,male,ab+,hypertension,"Inc Skinner",abnormal,staged
+"SeaN jenniNGs",80,female,ab-,diabetes,Clark-Johnson,abnormal,staged
+"DIAnE brAnch",44,male,o+,obesity,"Perez and Sons",inconclusive,staged
+"cindY OROzco",26,female,b-,asthma,"Kemp LLC",abnormal,staged
+"pAtriCIa MEdinA",80,male,ab+,cancer,"LLC Dixon",normal,staged
+"kayLa padillA",63,male,b-,asthma,"and Morales Jennings Cook,",inconclusive,staged
+"JUan klEiN",58,female,b-,arthritis,"Group Hood",inconclusive,staged
+"wILLIAM hIlL",38,female,a+,cancer,"Lindsey Inc",abnormal,staged
+"CARL BEst",60,male,b+,hypertension,"Ltd Wang",inconclusive,staged
+"TInA GriFfin",49,male,b+,cancer,"Inc Ford",abnormal,staged
+"MR. TYler TAYLOR Phd",80,male,a+,diabetes,Dean-Hawkins,abnormal,staged
+"TAyLoR howeLl Dds",35,female,b+,diabetes,"Walter PLC",inconclusive,staged
+"mIcHAeL MaRTIn",84,male,a+,asthma,"Sons Horn and",inconclusive,staged
+"heatHER mIller",76,male,a+,diabetes,"Powell Ward, and Mercado",inconclusive,staged
+"cathERinE gArDnEr",79,female,a-,hypertension,"James Ltd",abnormal,staged
+"ANNE THOMPSoN",76,female,o+,diabetes,Kemp-Munoz,abnormal,staged
+"TOdd coopeR",55,female,a+,diabetes,Henderson-Taylor,normal,staged
+"PhILLIP lyOnS",53,male,b-,cancer,"Parsons, Hartman Martinez and",normal,staged
+"MaRk foRD",18,male,b+,asthma,"Luna Inc",abnormal,staged
+"mARcUS ZAmorA",69,male,o+,arthritis,"Hernandez, Ritter and Huffman",normal,staged
+"KaTiE hENry",70,male,b+,diabetes,"Reed LLC",normal,staged
+"wilLIAm morTON",21,male,a+,diabetes,Thompson-Walker,normal,staged
+"KaTRina maRTin",47,male,a-,diabetes,"Group Nguyen",inconclusive,staged
+"HunTeR mckAy",85,male,a-,arthritis,Newton-White,abnormal,staged
+"dWAYnE DAViS",28,male,o+,cancer,"Ltd Thomas",abnormal,staged
+"sARAH CalDweLL",62,male,a-,obesity,"Pierce Ward, Torres and",inconclusive,staged
+"DAVid higgInS",49,female,b-,arthritis,"Evans and Hall Schneider,",abnormal,staged
+"bRADlEY coMbS",52,male,ab-,hypertension,Stout-Brown,abnormal,staged
+"chrisTiNa SChMitt",53,male,b+,cancer,"Cruz Ltd",abnormal,staged
+"coLtoN stRONg",55,male,ab-,asthma,"Stewart Sons and",normal,staged
+"MARK priCE",18,male,b-,arthritis,"Hall Roberts and Duarte,",normal,staged
+"sUZaNnE SchNeIder",52,male,ab-,hypertension,Ramirez-Robinson,normal,staged
+"MIchaEL HUrLEY",67,male,ab-,obesity,"Garcia, and Bishop Hernandez",inconclusive,staged
+"LIndsEy laMbErt",82,female,a+,hypertension,"and Brown Oneal, Shah",normal,staged
+"reBEcCA PARsONs",37,female,o+,asthma,"Group White",abnormal,staged
+"jUdy joHNsoN",52,female,ab-,cancer,"Hughes and Erickson, Anderson",inconclusive,staged
+"TOnyA caMpbell",37,female,b+,asthma,Lane-Kelly,inconclusive,staged
+"JAMEs Ross",83,female,a+,diabetes,Cox-Hester,abnormal,staged
+"SaRA COOk",33,male,o-,arthritis,"Jarvis Scott, Fleming and",abnormal,staged
+"annE howeLl",22,female,a-,obesity,Cline-Carpenter,normal,staged
+"RENEE bAilEY",19,female,b+,cancer,"Johnson, and Ross Harris",abnormal,staged
+"Jeffrey tuRNER",85,female,o+,obesity,"Kim Rosario, and Hammond",normal,staged
+"DR. LaUreN ClaRk DDs",19,male,b+,cancer,"PLC Jimenez",inconclusive,staged
+"terRY THoMaS",50,female,b-,asthma,Cantu-Berry,inconclusive,staged
+"JasOn baKEr",50,female,o-,obesity,Wright-Alexander,normal,staged
+"JEssicA gUtiERrEz",40,male,o+,obesity,Guzman-Carlson,inconclusive,staged
+"COURTNey HOdGes",57,male,ab-,obesity,Meyer-Hill,abnormal,staged
+"ANthONy reYEs",82,male,ab+,obesity,Dudley-Atkinson,abnormal,staged
+"LeaH cRoSs Dds",20,male,ab+,diabetes,Kelly-Allen,inconclusive,staged
+"PaUL MaRTinEz",20,male,b+,hypertension,"Lewis Livingston, Lowe and",normal,staged
+"DenisE rOdRIGuEZ",19,female,a-,hypertension,"Rodriguez Ltd",normal,staged
+"ashLEy ERIcKSoN",32,female,ab-,cancer,"and Johnson Moore, Branch",normal,staged
+"SEaN carDenaS",55,male,b-,diabetes,"Holmes and Hughes, Phillips",normal,staged
+"aLaN AlVaREz",81,male,b+,hypertension,"and Smith, Tucker Cross",normal,staged
+"JeSsICA phiLliPS",26,male,o-,hypertension,"Sons and Lozano",abnormal,staged
+"tiMOthY CoLemaN",54,female,ab+,cancer,"Russell Ltd",abnormal,staged
+"cHristina wooDS",57,male,b-,arthritis,"Jones Ltd",inconclusive,staged
+"mELIssa sCOtt",38,female,ab+,asthma,Gordon-Ward,abnormal,staged
+"GaRy hoPkiNS",54,male,o+,obesity,"Barnes and Sons",normal,staged
+"aPRIL VAleNCIA",42,male,a+,diabetes,Levine-Miller,inconclusive,staged
+"riTA archER",20,male,o-,diabetes,"and Marquez Silva Smith,",normal,staged
+"kIm PenA",44,female,o-,hypertension,Jackson-Copeland,inconclusive,staged
+"jaSoN FOlEy",54,male,b+,diabetes,"Perez and Ochoa White,",normal,staged
+"ShAUN GuzmAn",21,female,ab-,arthritis,"Ltd Conrad",inconclusive,staged
+"MATTHeW wHite",45,female,ab+,diabetes,Hampton-Thomas,abnormal,staged
+"aLExiS wilsOn",68,female,b+,arthritis,Thomas-Kelley,abnormal,staged
+"JaCQueLiNE maRshAll",27,male,a+,hypertension,Myers-Monroe,inconclusive,staged
+"RoBErt hIGGInS",42,male,ab-,asthma,"and Ford Lee, Rodriguez",inconclusive,staged
+"SierRa MoRTON",27,female,b-,asthma,"Sons Garcia and",inconclusive,staged
+"nATAliE sTANtoN",80,male,b+,asthma,"Perry Little, and Moore",inconclusive,staged
+"jEssica aceveDo",21,male,o+,diabetes,"Anderson Group",normal,staged
+"JENnIfEr mCmillan",84,female,a-,obesity,"Rodriguez and Sons",abnormal,staged
+"ChRISTopher mccLAiN",67,female,o-,arthritis,Thomas-Huber,abnormal,staged
+"kevIn HiCKs",66,male,ab+,arthritis,"Robinson Inc",abnormal,staged
+"MELIndA richARds",37,female,a-,cancer,Wood-Mathews,normal,staged
+"roBYn miRaNDa",30,female,a-,diabetes,"Walker and Gardner Fernandez,",abnormal,staged
+"scoTt caSTillO",78,male,o+,diabetes,"Smith and Johnston, Collins",abnormal,staged
+"jOHN GarciA",39,female,a+,diabetes,"Sons Miller and",abnormal,staged
+"miCHAeL TayloR",29,male,o-,asthma,Donaldson-Frey,normal,staged
+"jeFfReY WoOd",81,female,ab-,cancer,Brown-Yoder,abnormal,staged
+"MiCHAEl smIth",66,female,ab-,obesity,"Morgan Rios and Keller,",normal,staged
+"wiLLiam grIFfItH",65,male,b-,asthma,Gonzalez-King,abnormal,staged
+"CHrISTiNa lAwReNCe",80,male,ab-,asthma,"Wagner Ltd",inconclusive,staged
+"jeSsiCA HolmeS",72,female,o-,arthritis,"and Brown White, Jones",abnormal,staged
+"traCEY grEenE",85,male,o-,cancer,James-Smith,abnormal,staged
+"aMAnda lOpeZ",68,female,o+,hypertension,"Hanson Group",abnormal,staged
+"LaurA pEtErS",56,female,a-,cancer,Mcclain-Reed,inconclusive,staged
+"LAUrEn ANDErSOn",53,female,o-,asthma,Young-Smith,abnormal,staged
+"wILliAm CAmpos",37,female,b+,asthma,Hart-Brock,normal,staged
+"jEssiCa GoNzAleS",57,female,o+,hypertension,"Jones and Jones, Turner",abnormal,staged
+"brUcE gOnzaleS",36,male,o+,arthritis,Spears-Shah,normal,staged
+"rOBert WAlsH",20,female,b+,cancer,"and Anderson Smith Sanchez,",normal,staged
+"lIsA LeWis",83,male,o-,asthma,"Tran, and Ferrell Garcia",normal,staged
+"WiLlIaM RUiZ",79,male,b+,obesity,"Ltd Walton",normal,staged
+"StEven BALdWIn",62,male,o+,diabetes,"Group Rodriguez",inconclusive,staged
+"meGAn CoLON",38,male,ab+,asthma,"Carr LLC",normal,staged
+"kImbErlY brOoks",75,female,b-,cancer,Rodriguez-Guerra,abnormal,staged
+"EdWARd SMiTh jR.",28,male,a+,hypertension,"Sullivan Mullins, Macias and",abnormal,staged
+"aLliSoN CorDoVA",36,male,o-,hypertension,"Ballard PLC",normal,staged
+"lINdA THOMAs",54,male,ab+,obesity,Liu-Wilson,inconclusive,staged
+"paRkEr moOrE",81,female,b-,diabetes,"LLC Lewis",inconclusive,staged
+"tanya SOto",56,female,ab+,obesity,"Stokes Chambers and Martin,",normal,staged
+"mIChaEL jOrdaN",30,male,ab-,hypertension,Hernandez-Green,inconclusive,staged
+"ChRiSTINA MArTin",64,female,a-,diabetes,"Inc Lee",inconclusive,staged
+"TrACy BUrke",76,male,a+,obesity,"Wilkins Group",abnormal,staged
+"daVID SPeNCE",21,female,ab+,diabetes,"Valentine Ltd",normal,staged
+"JOsEph fOstER",59,female,o+,obesity,Alvarado-Deleon,inconclusive,staged
+"NIcholAs haLl",31,female,a-,diabetes,"Alexander and Jensen Andrews,",abnormal,staged
+"ChriSTiNA maCiAS",36,female,o+,asthma,"and Black, Henson Rhodes",inconclusive,staged
+"scoTT JoNes",42,female,b+,diabetes,"Sons and Marshall",inconclusive,staged
+"jaMEs AnDerSon",18,female,ab+,asthma,Rodriguez-Franco,inconclusive,staged
+"sHaUN LonG",62,female,a+,obesity,"Fritz Henderson Stanton, and",normal,staged
+"krIStInA morA",53,male,ab+,hypertension,West-Young,abnormal,staged
+"joshUa rIcHmOnd",82,female,a+,obesity,"Ltd Solis",normal,staged
+"Mark lAWrencE",19,female,o-,diabetes,Mcneil-Blake,inconclusive,staged
+"JOhN eLlis",83,female,a-,hypertension,Moore-Waters,inconclusive,staged
+"MRs. TiFFAny DeNnIs",26,male,o-,diabetes,"Group Scott",abnormal,staged
+"cyNTHIa HuANG",51,male,o+,arthritis,"and Simmons Sons",abnormal,staged
+"meLiSSA LawRENcE",20,male,o+,obesity,"Humphrey and Browning Fitzgerald,",abnormal,staged
