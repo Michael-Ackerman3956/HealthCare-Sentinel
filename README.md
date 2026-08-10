@@ -83,6 +83,16 @@ python sentinel.py
 
 </details>
 
+### Re-running or re-testing?
+
+The agent remediates data on each run. To start fresh with the original (dirty) dataset:
+
+```bash
+python sentinel.py --reset
+```
+
+This restores the original DB, clears DataHub learnings, and removes old reports. Run this before each evaluation.
+
 ### With DataHub (full agent mode)
 
 All options above work standalone. To see the full DataHub integration (tag writeback, lineage tracing, learning persistence):
