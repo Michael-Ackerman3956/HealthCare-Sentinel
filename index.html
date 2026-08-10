@@ -121,11 +121,35 @@ footer a{color:var(--blue);text-decoration:none}
   <p>An autonomous agent that discovers healthcare datasets, scans for quality issues, and writes findings back to DataHub.</p>
   <div class="hero-buttons">
     <a href="https://github.com/Michael-Ackerman3956/HealthCare-Sentinel" class="btn btn-primary">Get Started</a>
+    <a href="https://youtu.be/PLACEHOLDER" class="btn btn-ghost">Watch Demo</a>
     <a href="examples/triage-report.html" class="btn btn-ghost">Sample Report</a>
   </div>
 </div>
 
 <div class="wrap">
+
+  <!-- HERO TERMINAL -->
+  <div class="section" style="border-top:none;padding-top:0">
+    <div class="term">
+      <div class="term-bar"><div class="term-dot"></div><div class="term-dot"></div><div class="term-dot"></div></div>
+      <div class="term-body">
+        <span class="b">$</span> <span class="w">python sentinel.py</span><br>
+        <span class="m">[Agent]</span> 9 DataHub tools loaded.<br><br>
+        <span class="b">&rarr; search</span>({"query": "*"}) <span style="color:var(--text-dim)">&larr; 7 datasets</span><br>
+        <span class="b">&rarr; list_schema_fields</span>(raw_patients) <span style="color:var(--text-dim)">&larr; 15 cols</span><br>
+        <span class="b">&rarr; run_sql</span>("COUNT(*) WHERE age &lt; 0") <span style="color:var(--text-dim)">&larr; 832</span><br>
+        <span class="b">&rarr; get_lineage</span>(raw_patients) <span style="color:var(--text-dim)">&larr; 3 downstream</span><br>
+        <span class="b">&rarr; add_tags</span>(severity-CRITICAL) <span style="color:var(--text-dim)">&larr; auto</span><br><br>
+        <span class="m">BATCH APPROVAL &mdash; 2 operation(s)</span><br>
+        <span style="color:var(--text-dim)">1.</span> <span class="w">[correct] raw_patients (832 rows)</span><br>
+        <span style="color:var(--text-dim)">2.</span> <span class="w">[quarantine] raw_patients (555 rows)</span><br>
+        <span class="m">Approve?</span> <span class="g">all</span><br>
+        <span class="g">&check; 832 corrected. CDC: 832 before-images. Undo: --undo 1</span><br>
+        <span class="g">&check; 555 quarantined.</span><br><br>
+        <span class="g">&check; Report opened. 6 findings, 2 remediated.</span>
+      </div>
+    </div>
+  </div>
 
   <!-- DISCOVER -->
   <div class="section">

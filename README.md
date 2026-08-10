@@ -4,6 +4,8 @@
 
 Built for the [Build with DataHub: The Agent Hackathon](https://datahub.devpost.com/) — Track 1: Agents That Do Real Work.
 
+**[Landing Page](https://healthcare-sentinel-ai.vercel.app/)** · **[Demo Video](https://youtu.be/PLACEHOLDER)** · **[Sample Report](examples/triage-report.html)**
+
 ## Results
 
 | Metric | Value |

@@ -1147,7 +1147,6 @@ def collapse_downstream_findings(findings: list[dict]) -> list[dict]:
     No hardcoded check names — uses table + column hierarchy to decide."""
     import re
     source_by_key = {}
-    source_by_col = {}
     downstream = []
 
     for f in findings:
@@ -1156,18 +1155,18 @@ def collapse_downstream_findings(findings: list[dict]) -> list[dict]:
         col = f.get("column", "")
         if table in SOURCE_TABLES:
             source_by_key[(check, col)] = f
-            if col:
-                existing = source_by_col.get(col)
-                if not existing or _SEV_RANK.get(f.get("severity"), 3) < _SEV_RANK.get(existing.get("severity"), 3):
-                    source_by_col[col] = f
         else:
             downstream.append(f)
 
     unmatched = []
     for f in downstream:
-        bare = re.sub(r'^inherited_|_inherited$', '', f.get("check_name", ""))
+        check = f.get("check_name", "")
         col = f.get("column", "")
-        parent = source_by_key.get((bare, col)) or source_by_col.get(col)
+        parent = None
+        for (src_check, src_col), src_f in source_by_key.items():
+            if col and col == src_col and src_check in check:
+                parent = src_f
+                break
         if parent:
             ds = parent.get("downstream_contamination", [])
             table = f.get("table", "")
@@ -1978,11 +1977,18 @@ def main():
                 kept = [f for f in findings
                         if (f.get("table"), f.get("check_name"), f.get("column")) not in refuted_keys]
                 kept_keys = {(f.get("table"), f.get("check_name"), f.get("column")) for f in kept}
+                kept_table_col = {(f.get("table"), f.get("column")) for f in kept if f.get("column")}
                 for f in verified:
                     key = (f.get("table"), f.get("check_name"), f.get("column"))
-                    if key not in kept_keys:
-                        kept.append(f)
-                        kept_keys.add(key)
+                    if key in kept_keys:
+                        continue
+                    col = f.get("column", "")
+                    if col and "," not in col and (f.get("table"), col) in kept_table_col:
+                        continue
+                    kept.append(f)
+                    kept_keys.add(key)
+                    if col and "," not in col:
+                        kept_table_col.add((f.get("table"), col))
 
                 # Re-collapse: reviewer may re-add downstream findings that
                 # Pass 1 already collapsed into source downstream_contamination
