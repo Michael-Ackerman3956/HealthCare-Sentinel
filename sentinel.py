@@ -2038,28 +2038,42 @@ def main():
         # came from deterministic fallback (nothing to verify — they're
         # hardcoded). Only runs on AI-generated findings where confirmation
         # bias could produce false positives.
-        if findings and not args.no_verify:
-            print(f"\n{_BOLD(_BLUE('[Pass 2]'))} Review — verifying {len(findings)} findings + independent investigation...\n")
+        if not args.no_verify:
+            if findings:
+                print(f"\n{_BOLD(_BLUE('[Pass 2]'))} Review — verifying {len(findings)} findings + independent investigation...\n")
+            else:
+                print(f"\n{_BOLD(_BLUE('[Pass 2]'))} Review — independent investigation (Pass 1 found nothing)...\n")
             verifier_prompt = _load_skill("verifier.md")
             if verifier_prompt:
                 READ_ONLY = {"search", "search_documents", "get_entities",
                              "list_schema_fields", "get_lineage", "run_sql",
                              "report_finding"}
                 verify_tools = [t for t in tools if t.name in READ_ONLY]
-                findings_json = json.dumps(findings, indent=2, default=str)
-                verify_kickoff = (
-                    f"PHASE 1: Verify these {len(findings)} findings from the triage scan:\n\n"
-                    f"{findings_json}\n\n"
-                    f"Re-run SQL for each finding to confirm or refute it. "
-                    f"For schema claims, use typeof() to verify actual storage type. "
-                    f"Call report_finding for each CONFIRMED finding. "
-                    f"Do NOT call report_finding for refuted findings.\n\n"
-                    f"PHASE 2: After verifying, run your own independent investigation "
-                    f"for issues the triage agent missed. Check typeof() on numeric "
-                    f"columns, check materialized tables independently, look for "
-                    f"cross-table type mismatches. Call report_finding for any NEW "
-                    f"issues you discover."
-                )
+                findings_json = json.dumps(findings, indent=2, default=str) if findings else "[]"
+                if findings:
+                    verify_kickoff = (
+                        f"PHASE 1: Verify these {len(findings)} findings from the triage scan:\n\n"
+                        f"{findings_json}\n\n"
+                        f"Re-run SQL for each finding to confirm or refute it. "
+                        f"For schema claims, use typeof() to verify actual storage type. "
+                        f"Call report_finding for each CONFIRMED finding. "
+                        f"Do NOT call report_finding for refuted findings.\n\n"
+                        f"PHASE 2: After verifying, run your own independent investigation "
+                        f"for issues the triage agent missed. Check typeof() on numeric "
+                        f"columns, check materialized tables independently, look for "
+                        f"cross-table type mismatches. Call report_finding for any NEW "
+                        f"issues you discover."
+                    )
+                else:
+                    verify_kickoff = (
+                        f"The triage agent found 0 issues. This seems unlikely.\n\n"
+                        f"Run a FULL independent investigation from scratch:\n"
+                        f"1. Run: SELECT name FROM sqlite_master WHERE type='table'\n"
+                        f"2. For EVERY table, check: typeof() on numeric columns, "
+                        f"NULL/empty names, impossible ages, negative values, date ordering\n"
+                        f"3. Call report_finding for each issue you discover.\n\n"
+                        f"Be thorough. The triage agent may have missed everything."
+                    )
                 verify_db = str(snap_path) if not args.dry_run else SQLITE_DB
                 verify_text, verify_log = run_agent(
                     verify_tools, verify_db, auto_approve=True,

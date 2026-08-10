@@ -4,7 +4,7 @@
 
 Built for the [Build with DataHub: The Agent Hackathon](https://datahub.devpost.com/) — Track 1: Agents That Do Real Work.
 
-**[Landing Page](https://healthcare-sentinel-ai.vercel.app/)** · **[Demo Video](https://youtu.be/PLACEHOLDER)** · **[Sample Report](examples/triage-report.html)**
+**[Landing Page](https://healthcare-sentinel-ai.vercel.app/)** · **[Demo Video](https://youtu.be/edE3udWRhAA)** · **[Sample Report](examples/triage-report.html)**
 
 ## Results
 
@@ -20,7 +20,7 @@ Built for the [Build with DataHub: The Agent Hackathon](https://datahub.devpost.
 | Audit trail | Every remediation logged — reviewer, device, IP, run mode, full SQL |
 | Reversibility | Row-level CDC changelog; `--undo N` restores from before-images |
 | LLM backends | Claude Haiku, Gemini Flash (AI Studio / Vertex AI), Ollama |
-| Tests | 83 passing (`pytest tests/`) |
+| Tests | 93 passing (`pytest tests/`) |
 
 ## For Judges — Quick Start
 
@@ -30,6 +30,17 @@ cd HealthCare-Sentinel
 pip install -r requirements.txt
 ```
 
+### First time? Start here:
+
+```bash
+python sentinel.py --reset    # ensures clean DB with original (dirty) data
+python sentinel.py --dry-run  # free offline run — no API key needed
+```
+
+The `--reset` restores the original dataset with intentional data quality issues (missing names, impossible ages, etc.) so the agent has something to find. Always run it before your first evaluation.
+
+**Pre-generated report:** Open `examples/triage-report.html` directly — no setup needed.
+
 ### Option 0 — No setup, free (offline mode)
 
 ```bash
@@ -37,8 +48,6 @@ python sentinel.py --dry-run
 ```
 
 Runs built-in clinical rules against the included SQLite database (55,500 patient records). No API key, no DataHub, no cost. A triage report opens in your browser automatically.
-
-**Pre-generated report:** Open `examples/triage-report.html` directly — no setup needed.
 
 **Pick one LLM backend** — only one API key needed:
 
