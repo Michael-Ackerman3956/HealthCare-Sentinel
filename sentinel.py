@@ -36,6 +36,86 @@ MODEL = os.getenv("SENTINEL_MODEL", "claude-haiku-4-5")
 _CURRENT_RUN_MODE = "interactive"  # set in main() based on args
 
 # ---------------------------------------------------------------------------
+# Terminal formatting (ANSI colors)
+# ---------------------------------------------------------------------------
+
+_USE_COLOR = hasattr(sys.stdout, "isatty") and sys.stdout.isatty()
+
+def _c(code, text):
+    return f"\033[{code}m{text}\033[0m" if _USE_COLOR else str(text)
+
+_BOLD = lambda t: _c("1", t)
+_DIM = lambda t: _c("2", t)
+_RED = lambda t: _c("31", t)
+_GREEN = lambda t: _c("32", t)
+_YELLOW = lambda t: _c("33", t)
+_BLUE = lambda t: _c("34", t)
+_CYAN = lambda t: _c("36", t)
+_GRAY = lambda t: _c("90", t)
+
+
+def _urn_table(urn):
+    parts = urn.split(".")
+    last = parts[-1] if len(parts) > 1 else urn
+    return last.rstrip(")").split(",")[0] if "," in last else last
+
+
+def _condense_tool_args(name, args):
+    if name == "run_sql":
+        q = args.get("query", "")
+        return f'"{q[:70]}{"..." if len(q) > 70 else ""}"'
+    if name in ("list_schema_fields", "get_lineage"):
+        return _urn_table(str(args.get("urn", "")))
+    if name == "report_finding":
+        return f'{args.get("check_name", "?")} on {args.get("table", "?")}'
+    if name == "add_tags":
+        tags = args.get("tag_urns", args.get("tags", []))
+        if isinstance(tags, list):
+            return str([str(t).split(":")[-1] for t in tags])[:60]
+        return str(tags)[:60]
+    if name == "update_description":
+        return _urn_table(str(args.get("entity_urn", "")))
+    if name == "save_document":
+        return f'"{args.get("title", "?")}"'
+    if name == "search_documents":
+        q = args.get("query", "*")
+        return f'"{q}"'
+    return json.dumps(args, default=str)[:60]
+
+
+def _condense_tool_result(name, content):
+    if name == "run_sql":
+        m = re.search(r'\[\[(\d+)\]\]', content) or re.search(r'"rows"\s*:\s*\[\s*\[\s*(\d+)', content)
+        if m:
+            return m.group(1)
+        rows = content.count('[["') + content.count("[[")
+        if rows > 1:
+            return f"{rows} rows"
+        return content[:50]
+    if name == "list_schema_fields":
+        count = content.count('"fieldPath"')
+        return f"{count} columns" if count else content[:40]
+    if name == "search":
+        m = re.search(r'"total"\s*:\s*(\d+)', content)
+        return f"{m.group(1)} results" if m else content[:40]
+    if name == "get_lineage":
+        m = re.search(r'"total"\s*:\s*(\d+)', content)
+        return f"{m.group(1)} downstream" if m else content[:40]
+    if name in ("add_tags", "update_description"):
+        return "done" if "urn:" in content else content[:40]
+    if name == "save_document":
+        return "saved" if ("urn:" in content or "success" in content.lower()) else content[:40]
+    if name == "report_finding":
+        return "recorded"
+    if name == "search_documents":
+        m = re.search(r'"total"\s*:\s*(\d+)', content)
+        return f"{m.group(1)} docs" if m else content[:40]
+    if name == "get_entities":
+        return "loaded" if "urn:" in content else content[:40]
+    return content[:50]
+
+
+# ---------------------------------------------------------------------------
 # Tool: report_finding — agent reports each discovered issue
 # ---------------------------------------------------------------------------
 
@@ -884,10 +964,10 @@ def run_agent(tools, db_path: str, auto_approve: bool = False, kickoff: str = No
     import uuid
     config = {"configurable": {"thread_id": f"triage-{uuid.uuid4().hex[:8]}"}, "recursion_limit": max_steps}
 
-    print(f"  Agent model: {MODEL}")
-    print(f"  Tools: {', '.join(t.name for t in all_tools)}")
+    print(f"  {_GRAY('Agent model:')} {MODEL}")
+    print(f"  {_GRAY('Tools:')} {', '.join(t.name for t in all_tools)}")
     if not auto_approve:
-        print(f"  Human-in-the-loop: ON (batch approval for mutation tools)")
+        print(f"  {_YELLOW('Human-in-the-loop: ON')} {_GRAY('(batch approval for mutation tools)')}")
     print()
 
     seen_call_ids = set()
@@ -910,23 +990,27 @@ def run_agent(tools, db_path: str, auto_approve: bool = False, kickoff: str = No
                             if tc_id in seen_call_ids:
                                 continue
                             seen_call_ids.add(tc_id)
-                            args_str = json.dumps(tc.get("args", {}), default=str)[:120]
                             entry = {"tool": tc.get("name", "?"), "args": tc.get("args", {})}
                             tool_log.append(entry)
                             if tc_id:
                                 _pending_tool_ids[tc_id] = entry
-                            print(f"  -> {tc.get('name', '?')}({args_str})")
                     elif getattr(msg, "type", None) == "tool":
-                        content = str(msg.content)[:150]
+                        content = str(msg.content)[:200]
                         tid = getattr(msg, "tool_call_id", None)
+                        tname, targs = "?", {}
                         if tid and tid in _pending_tool_ids:
-                            _pending_tool_ids[tid]["result"] = str(msg.content)
+                            entry = _pending_tool_ids[tid]
+                            tname = entry.get("tool", "?")
+                            targs = entry.get("args", {})
+                            entry["result"] = str(msg.content)
                             del _pending_tool_ids[tid]
-                        print(f"     <- {content}")
+                        a_short = _condense_tool_args(tname, targs)
+                        r_short = _condense_tool_result(tname, content)
+                        print(f"  {_GRAY('→')} {_CYAN(tname)}({_DIM(a_short)}) {_GRAY('←')} {r_short}")
                     elif getattr(msg, "type", None) == "ai" and msg.content:
                         final_text = msg.content if isinstance(msg.content, str) else str(msg.content)
         except Exception as e:
-            print(f"\n  [Agent] Run stopped: {type(e).__name__}: {e}")
+            print(f"\n  {_RED('✗')} [Agent] Run stopped: {type(e).__name__}: {e}")
             return False
         return True
 
@@ -940,7 +1024,7 @@ def run_agent(tools, db_path: str, auto_approve: bool = False, kickoff: str = No
             state = agent.get_state(config)
             pending = [i for task in state.tasks for i in task.interrupts]
         except Exception as e:
-            print(f"  [Agent] Could not read pending approvals: {e}")
+            print(f"  {_RED('✗')} Could not read pending approvals: {e}")
             break
         if not pending:
             break
@@ -952,9 +1036,8 @@ def run_agent(tools, db_path: str, auto_approve: bool = False, kickoff: str = No
                 all_actions.append({"interrupt": p, "action": ar})
 
         # Display batch
-        print(f"\n  {'='*60}")
-        print(f"  BATCH APPROVAL — {len(all_actions)} operation(s)")
-        print(f"  {'='*60}")
+        print(f"\n  {_YELLOW('BATCH APPROVAL')} {_GRAY('—')} {_BOLD(f'{len(all_actions)} operation(s)')}")
+        print(f"  {_GRAY('─' * 56)}")
         for i, item in enumerate(all_actions, 1):
             ar = item["action"]
             name = ar.get("name", ar.get("tool", "?"))
@@ -978,21 +1061,22 @@ def run_agent(tools, db_path: str, auto_approve: bool = False, kickoff: str = No
                             conn.close()
                     except Exception:
                         pass
-                print(f"  {i}. [{args.get('action_type','?')}] {target}{affected}")
-                print(f"     SQL: {str(args.get('sql',''))}")
-                print(f"     Reason: {str(args.get('reason',''))}")
+                atype = args.get('action_type', '?')
+                print(f"  {i}. {_YELLOW(f'[{atype}]')} {_BOLD(target)}{affected}")
+                print(f"     {_GRAY('SQL:')} {str(args.get('sql',''))}")
+                print(f"     {_GRAY('Reason:')} {str(args.get('reason',''))}")
             else:
-                print(f"  {i}. [{name}] {json.dumps(args, default=str)[:100]}")
-        print(f"  {'='*60}")
+                print(f"  {i}. {_YELLOW(f'[{name}]')} {json.dumps(args, default=str)[:100]}")
+        print(f"  {_GRAY('─' * 56)}")
 
         # Ask once for the batch
         if auto_approve:
             choice = "all"
         else:
             try:
-                choice = input(f"  Approve which? [all / 1,3,5 / none] ").strip().lower()
+                choice = input(f"  {_YELLOW('Approve which?')} [all / 1,3,5 / none] ").strip().lower()
             except (EOFError, KeyboardInterrupt):
-                print("\n  No input available — denying all.")
+                print(f"\n  {_RED('No input available — denying all.')}")
                 choice = "none"
 
         approved = parse_approval_choice(choice, len(all_actions))
@@ -1029,7 +1113,7 @@ def run_agent(tools, db_path: str, auto_approve: bool = False, kickoff: str = No
 
         n_ok = len(approved)
         n_deny = len(all_actions) - n_ok
-        print(f"  -> {n_ok} APPROVED, {n_deny} DENIED")
+        print(f"  {_GREEN(f'✓ {n_ok} approved')}, {_GRAY(f'{n_deny} denied') if n_deny else ''}")
 
         if not stream_once(Command(resume={"decisions": decisions})):
             break
@@ -1623,13 +1707,13 @@ def main():
 
     # Handle --reset before anything else
     if args.reset:
-        print("\n  Resetting to clean state...")
+        print(f"\n  {_YELLOW('↻')} Resetting to clean state...")
         # 1. Restore original DB from earliest snapshot
         snap_dir = Path("snapshots")
         snaps = sorted(snap_dir.glob("healthcare_*.db")) if snap_dir.exists() else []
         if snaps:
             shutil.copy2(snaps[0], SQLITE_DB)
-            print(f"  DB restored from: {snaps[0]}")
+            print(f"  {_GREEN('✓')} DB restored from: {snaps[0]}")
         else:
             print(f"  Warning: no snapshots found in snapshots/")
 
@@ -1645,7 +1729,7 @@ def main():
                     deleted += 1
                 except Exception as e:
                     print(f"  Warning: could not delete '{d['title']}': {e}")
-            print(f"  DataHub learnings cleared ({deleted} of {len(docs)} documents deleted)")
+            print(f"  {_GREEN('✓')} DataHub learnings cleared ({deleted} of {len(docs)} documents deleted)")
         except Exception as e:
             print(f"  Warning: could not clear DataHub learnings: {e}")
             print(f"  (DataHub may not be running — DB was still restored)")
@@ -1655,9 +1739,9 @@ def main():
         if report_dir.exists():
             for f in report_dir.glob("triage-report_*.html"):
                 f.unlink()
-            print(f"  Reports cleared")
+            print(f"  {_GREEN('✓')} Reports cleared")
 
-        print(f"\n  Clean state ready. Run: python sentinel.py")
+        print(f"\n  {_GREEN('✓')} Clean state ready. Run: {_BOLD('python sentinel.py')}")
         return
 
     # Set run mode for audit trail
@@ -1686,13 +1770,13 @@ def main():
             show_audit_history(SQLITE_DB)
         return
 
-    print("=" * 60)
-    print("  Healthcare Sentinel — Clinical Data Triage Agent")
+    print(_BOLD("=" * 60))
+    print(_BOLD("  Healthcare Sentinel — Clinical Data Triage Agent"))
     if args.dry_run:
-        print("  [DRY RUN — no API calls, no DataHub writes]")
+        print(f"  {_GRAY('[DRY RUN — no API calls, no DataHub writes]')}")
     elif not args.auto_approve:
-        print("  [HUMAN-IN-THE-LOOP — you approve DataHub writes]")
-    print("=" * 60)
+        print(f"  {_YELLOW('[HUMAN-IN-THE-LOOP — you approve DataHub writes]')}")
+    print(_BOLD("=" * 60))
 
     if not args.dry_run and not args.watch:
         if MODEL.startswith("claude") and not os.getenv("ANTHROPIC_API_KEY"):
@@ -1700,11 +1784,15 @@ def main():
             print("  export ANTHROPIC_API_KEY=sk-ant-...")
             print("  Or use --dry-run to skip API calls")
             sys.exit(1)
-        if MODEL.startswith("gemini") and not os.getenv("GOOGLE_CLOUD_PROJECT"):
-            print("\nERROR: Set up Vertex AI for Gemini models")
-            print("  export GOOGLE_CLOUD_PROJECT=your-project-id")
-            print("  export GOOGLE_GENAI_USE_VERTEXAI=1")
-            print("  gcloud auth application-default login")
+        if MODEL.startswith("gemini") and not os.getenv("GOOGLE_API_KEY") and not os.getenv("GOOGLE_CLOUD_PROJECT"):
+            print("\nERROR: Set up Gemini API access")
+            print("  Option A — AI Studio (free):")
+            print("    export GOOGLE_API_KEY=AIza...")
+            print("    Get a key: https://aistudio.google.com/apikey")
+            print("  Option B — Vertex AI:")
+            print("    export GOOGLE_CLOUD_PROJECT=your-project-id")
+            print("    export GOOGLE_GENAI_USE_VERTEXAI=1")
+            print("    gcloud auth application-default login")
             sys.exit(1)
 
     if not Path(SQLITE_DB).exists():
@@ -1718,7 +1806,7 @@ def main():
             snap_dir.mkdir(parents=True, exist_ok=True)
             snap_path = snap_dir / f"healthcare_{datetime.now().strftime('%Y%m%d_%H%M%S')}.db"
             shutil.copy2(SQLITE_DB, snap_path)
-            print(f"  DB snapshot: {snap_path}")
+            print(f"  {_GRAY('DB snapshot:')} {snap_path}")
         except OSError as e:
             print(f"\nERROR: could not write DB snapshot: {e}")
             sys.exit(1)
@@ -1796,17 +1884,19 @@ def main():
                     "reason": f"{rows} bad ages propagated from upstream — cascade fix", "rows": rows})
 
         if remediation_proposals:
-            print(f"\n  {'='*60}")
-            print(f"  BATCH APPROVAL — {len(remediation_proposals)} remediation(s) proposed")
-            print(f"  {'='*60}")
+            print(f"\n  {_YELLOW('BATCH APPROVAL')} {_GRAY('—')} {_BOLD(f'{len(remediation_proposals)} remediation(s) proposed')}")
+            print(f"  {_GRAY('─' * 56)}")
             for i, p in enumerate(remediation_proposals, 1):
-                print(f"  {i}. [{p['action_type']}] {p['table']} ({p['rows']:,} rows)" if isinstance(p['rows'], int)
-                      else f"  {i}. [{p['action_type']}] {p['table']}")
-                print(f"     SQL: {p['sql']}")
-                print(f"     Reason: {p['reason']}")
-            print(f"  {'='*60}")
+                atype = p['action_type']
+                if isinstance(p['rows'], int):
+                    print(f"  {i}. {_YELLOW(f'[{atype}]')} {_BOLD(p['table'])} ({p['rows']:,} rows)")
+                else:
+                    print(f"  {i}. {_YELLOW(f'[{atype}]')} {_BOLD(p['table'])}")
+                print(f"     {_GRAY('SQL:')} {p['sql']}")
+                print(f"     {_GRAY('Reason:')} {p['reason']}")
+            print(f"  {_GRAY('─' * 56)}")
             try:
-                choice = input(f"  Approve which? [all / 1,3 / none] ").strip().lower()
+                choice = input(f"  {_YELLOW('Approve which?')} [all / 1,3 / none] ").strip().lower()
             except (EOFError, KeyboardInterrupt):
                 choice = "none"
             approved = parse_approval_choice(choice, len(remediation_proposals))
@@ -1814,7 +1904,7 @@ def main():
             for i, p in enumerate(remediation_proposals):
                 if i in approved:
                     result = execute_fix(SQLITE_DB, p["action_type"], p["table"], p["sql"], p["reason"])
-                    print(f"  -> {result}")
+                    print(f"  {_GREEN('✓')} {result}")
                 else:
                     ctx = _get_device_context()
                     try:
@@ -1829,9 +1919,9 @@ def main():
                         audit_conn.close()
                     except Exception:
                         pass
-                    print(f"  -> DENIED: {p['action_type']} on {p['table']}")
+                    print(f"  {_RED('✗')} DENIED: {p['action_type']} on {p['table']}")
     else:
-        print("\n[Agent] Connecting to DataHub Agent Context Kit...")
+        print(f"\n{_BOLD('[Agent]')} Connecting to DataHub Agent Context Kit...")
         try:
             from datahub.sdk.main_client import DataHubClient
             from datahub_agent_context.langchain_tools import build_langchain_tools
@@ -1846,20 +1936,20 @@ def main():
                 KEEP.add("add_structured_properties")
             tools = [wrap_save_document_upsert(t, client._graph) if t.name == "save_document" else t
                      for t in tools if t.name in KEEP]
-            print(f"  Connected. {len(tools)} DataHub tools loaded.")
-            print(f"  Memory: search_documents (recall) + save_document (learn)")
+            print(f"  {_GREEN('✓')} Connected. {len(tools)} DataHub tools loaded.")
+            print(f"  {_GRAY('Memory: search_documents (recall) + save_document (learn)')}")
         except Exception as e:
-            print(f"  DataHub connection failed: {e}")
-            print("  Tip: Start Docker Desktop, then run: datahub docker quickstart")
+            print(f"  {_RED('✗')} DataHub connection failed: {e}")
+            print(f"  {_GRAY('Tip: Start Docker Desktop, then run: datahub docker quickstart')}")
             sys.exit(1)
 
         # Pre-fetch learnings so the agent can't skip Recall
         prior_doc = latest_learnings(client._graph)
         prior_learnings = prior_doc["content"][:4000] if prior_doc else None
         if prior_learnings:
-            print(f"  Prior learnings found ({len(prior_learnings)} chars)")
+            print(f"  {_BLUE('↻')} Prior learnings found ({len(prior_learnings)} chars)")
         else:
-            print(f"  No prior learnings — first run since reset")
+            print(f"  {_GRAY('No prior learnings — first run since reset')}")
 
         learnings_prefix = ""
         if prior_learnings:
@@ -1881,7 +1971,7 @@ def main():
         # consistently produces 6 findings with proper batch approval.
 
         kickoff = f"{learnings_prefix}{KICKOFF}"
-        print("\n[Pass 1] Full triage scan...\n")
+        print(f"\n{_BOLD(_BLUE('[Pass 1]'))} Full triage scan...\n")
         final_text, tool_log = run_agent(tools, SQLITE_DB, auto_approve=args.auto_approve, kickoff=kickoff)
 
         # Try to parse structured JSON from the agent's final output.
@@ -1915,7 +2005,7 @@ def main():
         # hardcoded). Only runs on AI-generated findings where confirmation
         # bias could produce false positives.
         if findings and not args.no_verify:
-            print(f"\n[Pass 2] Review — verifying {len(findings)} findings + independent investigation...\n")
+            print(f"\n{_BOLD(_BLUE('[Pass 2]'))} Review — verifying {len(findings)} findings + independent investigation...\n")
             verifier_prompt = _load_skill("verifier.md")
             if verifier_prompt:
                 READ_ONLY = {"search", "search_documents", "get_entities",
@@ -1996,7 +2086,7 @@ def main():
 
                 n_refuted = len(findings) - len([f for f in findings if (f.get("table"), f.get("check_name"), f.get("column")) not in refuted_keys])
                 n_added = len(kept) - len(findings) + n_refuted
-                print(f"\n  Reviewer: {n_refuted} refuted, {n_added} new, {len(kept)} total")
+                print(f"\n  {_GREEN('✓')} Reviewer: {_GRAY(f'{n_refuted} refuted')}, {_GREEN(f'{n_added} new')}, {_BOLD(f'{len(kept)} total')}")
                 findings = kept
 
         # Shared post-processing for both single-agent and multi-agent paths
@@ -2026,10 +2116,10 @@ def main():
                                 "table": str(a.get("entity_urn", "")).split(".")[-1],
                                 "text": str(a.get("description", ""))[:80]})
 
-    print(f"\n[Report] Generating triage report...")
+    print(f"\n{_BOLD('[Report]')} Generating triage report...")
     try:
         report_path = generate_report(datasets, findings, actions, tool_log, db_path=SQLITE_DB)
-        print(f"  Saved to: {report_path}")
+        print(f"  {_GREEN('✓')} Saved to: {report_path}")
         try:
             webbrowser.open(f"file://{Path(report_path).resolve()}")
         except Exception:
@@ -2037,16 +2127,20 @@ def main():
     except Exception as e:
         print(f"  ERROR: could not generate report: {e}")
 
-    print(f"\n{'=' * 60}")
-    print(f"  Triage complete. {len(findings)} findings across {len(datasets)} datasets.")
+    print(f"\n{_BOLD('=' * 60)}")
+    print(f"  {_GREEN('✓')} Triage complete. {_BOLD(f'{len(findings)} findings')} across {len(datasets)} datasets.")
     sev_counts = {}
     for f in findings:
         s = f.get("severity", "?")
         sev_counts[s] = sev_counts.get(s, 0) + 1
-    print(f"  Severity: {', '.join(f'{v} {k}' for k, v in sorted(sev_counts.items()))}")
+    sev_parts = []
+    for k, v in sorted(sev_counts.items()):
+        color = _RED if k == "CRITICAL" else (_YELLOW if k == "HIGH" else _GRAY)
+        sev_parts.append(f"{color(f'{v} {k}')}")
+    print(f"  Severity: {', '.join(sev_parts)}")
     if tool_log:
-        print(f"  Agent made {len(tool_log)} tool calls")
-    print(f"{'=' * 60}")
+        print(f"  {_GRAY(f'Agent made {len(tool_log)} tool calls')}")
+    print(_BOLD("=" * 60))
 
 
 if __name__ == "__main__":

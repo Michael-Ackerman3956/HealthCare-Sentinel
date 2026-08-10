@@ -13,64 +13,82 @@ Built for the [Build with DataHub: The Agent Hackathon](https://datahub.devpost.
 | Records scanned | 55,500 across 4 tables |
 | Critical issues caught | 5 (impossible ages, missing IDs, chronology violations) |
 | Time to full triage | <90 seconds |
-| Cost per run | Free (Gemini Flash) / $0.80–1.50 (Claude Haiku) |
+| Cost per run | Free (Gemini via AI Studio) / ~$0.80–1.50 (Claude Haiku) |
 | Architecture | Two-pass: triage agent + adversarial verifier |
 | Agent autonomy | 9 phases, ~40-60 tool calls, zero human intervention for reads |
 | Severity scoring | Deterministic floor from clinical rules; LLM can raise, never lower |
 | Audit trail | Every remediation logged — reviewer, device, IP, run mode, full SQL |
 | Reversibility | Row-level CDC changelog; `--undo N` restores from before-images |
-| LLM backends | Claude Haiku, Gemini Flash (AI Studio / Vertex AI) |
+| LLM backends | Claude Haiku, Gemini Flash (AI Studio / Vertex AI), Ollama |
 | Tests | 83 passing (`pytest tests/`) |
 
-## For Judges — Quick Evaluation
-
-**No DataHub needed for a first look:**
+## For Judges — Quick Start
 
 ```bash
 git clone https://github.com/Michael-Ackerman3956/HealthCare-Sentinel.git
 cd HealthCare-Sentinel
+pip install -r requirements.txt
+```
+
+### Option 0 — No setup, free (offline mode)
+
+```bash
 python sentinel.py --dry-run
 ```
 
-This runs built-in clinical rules against the included SQLite database (55,500 patient records). No API key, no DataHub, no cost. A triage report opens in your browser automatically.
+Runs built-in clinical rules against the included SQLite database (55,500 patient records). No API key, no DataHub, no cost. A triage report opens in your browser automatically.
 
 **Pre-generated report:** Open `examples/triage-report.html` directly — no setup needed.
 
-**With DataHub (full agent mode):**
+### Option 1 — Google AI Studio (free, easiest)
+
+1. Get a free API key at [aistudio.google.com/apikey](https://aistudio.google.com/apikey)
+2. Run:
 
 ```bash
-pip install -r requirements.txt
-datahub docker quickstart       # starts DataHub locally
-
-# (optional) register structured properties for Phase 6c trust scores
-datahub properties upsert -f sentinel_properties.yaml
-# or: python setup_datahub.py
-```
-
-Pick your LLM backend — any of these work:
-
-| Backend | Setup | Cost | Best for |
-|---|---|---|---|
-| **Gemini Flash (AI Studio)** | `export GOOGLE_API_KEY=AIza...` | Free (20 req/day) | Quick testing |
-| **Gemini Flash (Vertex AI)** | `export GOOGLE_CLOUD_PROJECT=my-proj` | ~$0.01/run | Production, multi-agent |
-| **Claude Haiku** | `export ANTHROPIC_API_KEY=sk-ant-...` | ~$0.80-1.50/run | Best output quality |
-
-```bash
-# Then run with your chosen model:
-SENTINEL_MODEL=gemini-3.6-flash python sentinel.py    # Gemini
-SENTINEL_MODEL=claude-haiku-4-5 python sentinel.py    # Claude
-python sentinel.py                                     # defaults to Claude Haiku
-```
-
-**Vertex AI setup** (for GCP users with credits):
-```bash
-gcloud services enable aiplatform.googleapis.com --project=YOUR_PROJECT_ID
-gcloud auth application-default login
-export GOOGLE_CLOUD_PROJECT=YOUR_PROJECT_ID
+export GOOGLE_API_KEY=AIza...
 SENTINEL_MODEL=gemini-2.0-flash python sentinel.py
 ```
 
-The agent will discover datasets, generate SQL checks, reason about clinical severity, trace lineage, and ask your approval before every DataHub write and data fix.
+### Option 2 — Anthropic Claude (best output quality, ~$0.80–1.50/run)
+
+1. Get an API key at [console.anthropic.com](https://console.anthropic.com/)
+2. Run:
+
+```bash
+export ANTHROPIC_API_KEY=sk-ant-...
+python sentinel.py
+```
+
+### Option 3 — Google Vertex AI (for GCP users)
+
+1. Enable the API and authenticate:
+
+```bash
+gcloud services enable aiplatform.googleapis.com --project=YOUR_PROJECT_ID
+gcloud auth application-default login
+```
+
+2. Run:
+
+```bash
+export GOOGLE_CLOUD_PROJECT=YOUR_PROJECT_ID
+export GOOGLE_GENAI_USE_VERTEXAI=1
+SENTINEL_MODEL=gemini-2.0-flash python sentinel.py
+```
+
+### With DataHub (full agent mode)
+
+All options above work standalone. To see the full DataHub integration (tag writeback, lineage tracing, learning persistence):
+
+```bash
+datahub docker quickstart       # starts DataHub locally
+
+# (optional) register structured properties for trust scores
+datahub properties upsert -f sentinel_properties.yaml
+```
+
+The agent discovers datasets, generates SQL checks, reasons about clinical severity, traces lineage, and asks your approval before data fixes.
 
 ## Run Modes
 
@@ -229,21 +247,12 @@ python sentinel.py --undo 3           # revert operation #3
 
 - **DataHub Agent Context Kit** — Dataset discovery, schema reading, lineage tracing, tag/description/structured property writeback, document memory
 - **LangGraph** — ReAct agent loop, human-in-the-loop (interrupt/resume), checkpointing
-- **Claude Haiku / Gemini 2.5 Pro** — Clinical reasoning, autonomous SQL generation (~$0.80-1.50/run Haiku, ~$1.00-2.00/run Gemini)
+- **Claude Haiku / Gemini Flash** — Clinical reasoning, autonomous SQL generation (free via AI Studio, ~$0.80–1.50/run Haiku)
 - **SQLite** — Read-only scanning (`run_sql`), data remediation (`apply_fix`), CDC audit trail (`_sentinel_audit` + `_sentinel_changelog`)
 
-## What the Agent Found
+## Sample Findings
 
-On the hackathon's healthcare dataset (55,500 patient records across 4 tables):
-
-| Severity | Finding | Rows | Clinical Impact |
-|---|---|---|---|
-| CRITICAL | Impossible patient ages (-88, 262) | 832 | Fatal drug dosing errors |
-| CRITICAL | Missing patient identifiers | 555 | Invisible in emergency triage |
-| CRITICAL | Discharge before admission | 277 | Triggers $10K fraud audits |
-| HIGH | Negative billing amounts | 1,215 | Revenue leakage |
-| HIGH | Bad ages propagated to downstream marts | 832 | 3 tables contaminated |
-| MEDIUM | Age column stored as TEXT | schema | Prevents numeric validation |
+The agent autonomously discovers issues and ranks them by clinical severity. Findings vary per run — the agent generates its own SQL checks, so each run may surface different issues. See `examples/triage-report.html` for a sample report from the included dataset (55,500 patient records across 4 tables).
 
 ## What's Verified vs. What's Scaffolded
 
