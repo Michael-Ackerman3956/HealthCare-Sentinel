@@ -137,7 +137,7 @@ footer a{color:var(--blue);text-decoration:none}
         <div class="term-bar"><div class="term-dot"></div><div class="term-dot"></div><div class="term-dot"></div></div>
         <div class="term-body">
           <span class="b">$</span> <span class="w">python sentinel.py</span><br>
-          <span class="b">[Agent]</span> 10 DataHub tools loaded.<br><br>
+          <span class="b">[Agent]</span> 9 DataHub tools loaded.<br><br>
           <span class="b">  &rarr; search</span>({"query": "*"})<br>
           <span class="g">    Found 7 datasets</span><br><br>
           <span class="b">  &rarr; list_schema_fields</span>(raw_patients)<br>
@@ -201,7 +201,7 @@ footer a{color:var(--blue);text-decoration:none}
   <div class="section">
     <div class="section-label mustard">Govern</div>
     <h2>Reads alone. Writes with permission.</h2>
-    <p class="desc">The agent discovers and investigates autonomously, but asks before writing tags or descriptions to DataHub. Built for healthcare governance.</p>
+    <p class="desc">Metadata writes (tags, descriptions) are auto-approved. Data fixes require human approval via batch prompt. Built for healthcare governance.</p>
     <div class="visual">
       <div class="term">
         <div class="term-bar"><div class="term-dot"></div><div class="term-dot"></div><div class="term-dot"></div></div>
@@ -226,7 +226,7 @@ footer a{color:var(--blue);text-decoration:none}
   <div class="section">
     <div class="section-label mustard">Remediate</div>
     <h2>Finds issues. Then fixes them.</h2>
-    <p class="desc">The agent proposes data fixes — correct, quarantine, flag, standardize, deduplicate, enrich. Every operation is snapshotted and fully reversible.</p>
+    <p class="desc">The agent proposes data fixes — correct, quarantine, flag, standardize, deduplicate, enrich. Row-level CDC captures before-images for full reversibility.</p>
     <div class="visual">
       <div class="term">
         <div class="term-bar"><div class="term-dot"></div><div class="term-dot"></div><div class="term-dot"></div></div>
@@ -234,12 +234,12 @@ footer a{color:var(--blue);text-decoration:none}
           <span class="b">  &rarr; apply_fix</span>(correct, raw_patients)<br>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="m">UPDATE raw_patients SET age=NULL WHERE age&lt;0</span><br><br>
           <span class="w">  Will correct 832 rows — Approve? [y/N]</span> <span class="g">y</span><br>
-          <span class="g">  OK: 832 rows corrected. Snapshot: _snap_1</span><br>
+          <span class="g">  OK: 832 rows corrected. CDC: 832 before-images</span><br>
           <span class="g">  Undo: python sentinel.py --undo 1</span><br><br>
           <span class="b">  &rarr; apply_fix</span>(quarantine, raw_patients)<br>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="m">Move 555 missing-name rows to quarantine</span><br><br>
           <span class="w">  Approve? [y/N]</span> <span class="g">y</span><br>
-          <span class="g">  OK: 555 rows quarantined. Snapshot: _snap_2</span>
+          <span class="g">  OK: 555 rows quarantined. CDC: 555 before-images</span>
         </div>
       </div>
     </div>
@@ -249,7 +249,7 @@ footer a{color:var(--blue);text-decoration:none}
   <div class="section">
     <div class="section-label">Reversibility</div>
     <h2>Every change undoable.</h2>
-    <p class="desc">Full database snapshot before every run. Row-level snapshots before every fix. Audit trail of who approved what, and why.</p>
+    <p class="desc">Full database snapshot before every run. Row-level CDC before-images before every fix. Audit trail of who approved what, and why.</p>
     <div class="visual">
       <div class="term">
         <div class="term-bar"><div class="term-dot"></div><div class="term-dot"></div><div class="term-dot"></div></div>
@@ -275,7 +275,7 @@ footer a{color:var(--blue);text-decoration:none}
       <div class="stat-stack">
         <div class="stat-row">
           <div class="n" style="font-size:16px;min-width:120px;color:var(--mustard)">NEW FILE</div>
-          <div><div class="l">Full 8-phase triage</div></div>
+          <div><div class="l">Full 9-phase triage</div></div>
         </div>
         <div class="stat-row">
           <div class="n" style="font-size:16px;min-width:120px;color:var(--mustard)">SCHEMA</div>
@@ -324,7 +324,7 @@ footer a{color:var(--blue);text-decoration:none}
     <p class="desc">Agent Context Kit for discovery and writeback. LangGraph for the ReAct loop and human-in-the-loop. Two model options depending on cost and capability needs.</p>
     <div class="visual">
       <div class="stack-list">
-        <div class="stack-item"><span class="stack-dot"></span>DataHub Agent Context Kit (10 tools)</div>
+        <div class="stack-item"><span class="stack-dot"></span>DataHub Agent Context Kit (9 tools)</div>
         <div class="stack-item"><span class="stack-dot"></span>LangGraph (ReAct + HITL + checkpoints)</div>
         <div class="stack-item"><span class="stack-dot" style="background:var(--mustard)"></span>Claude Haiku 4.5 (~$0.80-1.50/run)</div>
         <div class="stack-item"><span class="stack-dot" style="background:var(--mustard)"></span>Gemini 2.5 Pro (~$1.00-2.00/run)</div>

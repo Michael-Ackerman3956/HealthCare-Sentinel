@@ -11,9 +11,9 @@ Built for the [Build with DataHub: The Agent Hackathon](https://datahub.devpost.
 | Records scanned | 55,500 across 4 tables |
 | Critical issues caught | 5 (impossible ages, missing IDs, chronology violations) |
 | Time to full triage | <90 seconds |
-| Cost per run | Free (Gemini Flash) / $0.80–1.50 (Claude Haiku, multi-agent) |
-| Architecture | Multi-agent: 3 specialists + adversarial verifier + remediator |
-| Agent autonomy | 9 phases, ~60 tool calls, zero human intervention for reads |
+| Cost per run | Free (Gemini Flash) / $0.80–1.50 (Claude Haiku) |
+| Architecture | Two-pass: triage agent + adversarial verifier |
+| Agent autonomy | 9 phases, ~40-60 tool calls, zero human intervention for reads |
 | Severity scoring | Deterministic floor from clinical rules; LLM can raise, never lower |
 | Audit trail | Every remediation logged — reviewer, device, IP, run mode, full SQL |
 | Reversibility | Row-level CDC changelog; `--undo N` restores from before-images |
@@ -116,25 +116,21 @@ The Clinic 2 data has the same schema but different quality problems (future dat
 
 Healthcare Sentinel connects to your DataHub catalog, autonomously discovers datasets, generates quality checks, and ranks every finding by **patient harm** — not just row counts. It writes severity tags, structured properties, and warnings back to DataHub so the next person or agent inherits the knowledge.
 
-### Multi-Agent Architecture (default)
+### Two-Pass Architecture
 
-Three specialist agents scan in parallel, an adversarial verifier confirms findings, then a single remediation pass applies fixes with human approval:
+A full triage agent scans all tables, then an adversarial verifier independently re-checks every finding:
 
 ```
-Pass 1: Specialist Scans (read-only, auto-approved)
-  ├─ [CS] Clinical Safety — patient harm, dosing, identifiers
-  ├─ [FI] Financial Integrity — billing, revenue, fraud indicators
-  └─ [DQ] Data Quality — schema types, completeness, contamination
+Pass 1: Triage Scan (9 phases — read + write + remediate)
+  └─ Discover → Understand → Investigate → Trace → Assess
+     → Record (auto) → Remediate (HITL) → Learn
 
 Pass 2: Adversarial Verifier (read-only)
   └─ Re-runs SQL for each finding, attempts to REFUTE it
-     Only confirmed findings survive
-
-Pass 3: Remediation + DataHub Writeback (HITL)
-  └─ Tags, descriptions, apply_fix, save learnings
+     Only confirmed findings survive; new issues added
 ```
 
-Each specialist's prompt lives in `skills/` — version-controlled and auditable. Use `--single-agent` to fall back to the original single-pass mode.
+Use `--no-verify` to skip Pass 2 for faster runs. Specialist prompts live in `skills/` — version-controlled and auditable.
 
 ### 9 Phases (0–8)
 
@@ -152,13 +148,12 @@ Each specialist's prompt lives in `skills/` — version-controlled and auditable
 
 ### Human-in-the-Loop
 
-In default mode, the agent asks for approval before every DataHub write and data remediation. Reads are autonomous; writes require human confirmation — appropriate for healthcare data governance.
+In default mode, metadata writes (tags, descriptions, learnings) are auto-approved. Data fixes (`apply_fix`) require human approval via batch prompt. Reads are fully autonomous. Appropriate for healthcare data governance.
 
-### DataHub Integration (8 of 10 tools used)
+### DataHub Integration (9 tools)
 
-- **Read tools**: `search`, `search_documents`, `get_entities`, `list_schema_fields`, `get_lineage` — autonomous, no approval needed
-- **Write tools**: `add_tags`, `update_description`, `add_structured_properties`, `save_document` — gated by HITL unless `--auto-approve`
-- **Per-entity structured properties**: `sentinel.trust_score`, `sentinel.worst_severity`, `sentinel.finding_count`, `sentinel.top_issue`, `sentinel.last_triage`, `sentinel.remediation_status`
+- **Read tools**: `search`, `search_documents`, `get_entities`, `list_schema_fields`, `get_lineage`, `get_dataset_queries` — autonomous
+- **Write tools**: `add_tags`, `update_description`, `save_document` — auto-approved (metadata only)
 
 ### Self-Learning
 
@@ -214,16 +209,16 @@ python sentinel.py --undo 3           # revert operation #3
 └─────┬──────┘
       │ triggers
 ┌─────┴──────────────────────────────────────┐
-│  Claude (Haiku) — ReAct Agent Brain        │
+│  LLM — ReAct Agent Brain                   │
 │  LangGraph: 9 phases, HITL, checkpoints    │
-│  Deterministic severity floor              │
+│  Two-pass: triage + adversarial verifier   │
 └─────┬──────────────┬───────────────┬───────┘
       │              │               │
 ┌─────┴──────┐ ┌─────┴────────┐ ┌────┴──────────────┐
 │ DataHub    │ │ SQLite data  │ │ Audit trail       │
 │ Agent      │ │ run_sql (RO) │ │ _sentinel_audit   │
 │ Context Kit│ │ apply_fix    │ │ CDC changelog     │
-│ 8/10 tools │ │ 55,500 rows  │ │ who/what/when/    │
+│ 9 tools    │ │ 55,500 rows  │ │ who/what/when/    │
 └────────────┘ └──────────────┘ │ where/why + undo  │
                                 └───────────────────┘
 ```
