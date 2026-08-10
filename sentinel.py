@@ -41,17 +41,25 @@ _CURRENT_RUN_MODE = "interactive"  # set in main() based on args
 
 _USE_COLOR = hasattr(sys.stdout, "isatty") and sys.stdout.isatty()
 
+def _rgb(r, g, b, text):
+    return f"\033[38;2;{r};{g};{b}m{text}\033[0m" if _USE_COLOR else str(text)
+
 def _c(code, text):
     return f"\033[{code}m{text}\033[0m" if _USE_COLOR else str(text)
 
 _BOLD = lambda t: _c("1", t)
-_DIM = lambda t: _c("2", t)
-_RED = lambda t: _c("31", t)
-_GREEN = lambda t: _c("32", t)
-_YELLOW = lambda t: _c("33", t)
-_BLUE = lambda t: _c("34", t)
-_CYAN = lambda t: _c("36", t)
-_GRAY = lambda t: _c("90", t)
+_DIM = lambda t: _rgb(122, 122, 130, t)
+_RED = lambda t: _rgb(239, 68, 68, t)
+_GREEN = lambda t: _rgb(40, 200, 64, t)
+_YELLOW = lambda t: _rgb(212, 168, 67, t)
+_BLUE = lambda t: _rgb(24, 144, 255, t)
+_CYAN = lambda t: _rgb(24, 144, 255, t)
+_GRAY = lambda t: _rgb(122, 122, 130, t)
+
+_SQL_TOOLS = {"run_sql"}
+
+def _tool_color(name):
+    return _GREEN if name in _SQL_TOOLS else _BLUE
 
 
 def _urn_table(urn):
@@ -233,7 +241,7 @@ def _get_device_context() -> dict:
         ip = socket.gethostbyname(hn)
     except socket.gaierror:
         ip = "unknown"
-    return {"hostname": hn, "ip_address": ip, "reviewer": os.getenv("SENTINEL_REVIEWER", getpass.getuser())}
+    return {"hostname": hn, "ip_address": ip, "reviewer": os.getenv("SENTINEL_REVIEWER", "reviewer")}
 
 
 def init_audit_db(db_path: str):
@@ -995,18 +1003,19 @@ def run_agent(tools, db_path: str, auto_approve: bool = False, kickoff: str = No
                             if tc_id:
                                 _pending_tool_ids[tc_id] = entry
                     elif getattr(msg, "type", None) == "tool":
-                        content = str(msg.content)[:200]
+                        full_content = str(msg.content)
                         tid = getattr(msg, "tool_call_id", None)
                         tname, targs = "?", {}
                         if tid and tid in _pending_tool_ids:
                             entry = _pending_tool_ids[tid]
                             tname = entry.get("tool", "?")
                             targs = entry.get("args", {})
-                            entry["result"] = str(msg.content)
+                            entry["result"] = full_content
                             del _pending_tool_ids[tid]
                         a_short = _condense_tool_args(tname, targs)
-                        r_short = _condense_tool_result(tname, content)
-                        print(f"  {_GRAY('→')} {_CYAN(tname)}({_DIM(a_short)}) {_GRAY('←')} {r_short}")
+                        r_short = _condense_tool_result(tname, full_content[:2000])
+                        tc = _tool_color(tname)
+                        print(f"  {tc('→')} {tc(tname)}({_DIM(a_short)}) {_GRAY('←')} {_GRAY(r_short)}")
                     elif getattr(msg, "type", None) == "ai" and msg.content:
                         final_text = msg.content if isinstance(msg.content, str) else str(msg.content)
         except Exception as e:
@@ -1229,7 +1238,6 @@ def collapse_downstream_findings(findings: list[dict]) -> list[dict]:
     downstream_contamination list. Keeps findings on source tables and
     truly independent downstream issues (e.g. negative_length_of_stay).
     No hardcoded check names — uses table + column hierarchy to decide."""
-    import re
     source_by_key = {}
     downstream = []
 
@@ -1260,7 +1268,33 @@ def collapse_downstream_findings(findings: list[dict]) -> list[dict]:
         else:
             unmatched.append(f)
 
-    return list(source_by_key.values()) + unmatched
+    # Second pass: merge orphan findings that share the same column across
+    # tables — pick highest severity as primary, rest become downstream.
+    merged = []
+    col_primary = {}
+    for f in unmatched:
+        col = f.get("column", "")
+        if not col or "," in col or col == "*":
+            merged.append(f)
+            continue
+        if col in col_primary:
+            primary = col_primary[col]
+            ds = primary.get("downstream_contamination", [])
+            table = f.get("table", "")
+            if table not in ds:
+                ds.append(table)
+            primary["downstream_contamination"] = ds
+            p_sev = _SEV_RANK.get(primary.get("severity", ""), 99)
+            f_sev = _SEV_RANK.get(f.get("severity", ""), 99)
+            if f_sev < p_sev:
+                primary["severity"] = f.get("severity")
+            if (f.get("affected_rows") or 0) > (primary.get("affected_rows") or 0):
+                primary["affected_rows"] = f["affected_rows"]
+        else:
+            col_primary[col] = f
+            merged.append(f)
+
+    return list(source_by_key.values()) + merged
 
 
 _SEVERITY_KEYWORDS = {
@@ -1921,7 +1955,7 @@ def main():
                         pass
                     print(f"  {_RED('✗')} DENIED: {p['action_type']} on {p['table']}")
     else:
-        print(f"\n{_BOLD('[Agent]')} Connecting to DataHub Agent Context Kit...")
+        print(f"\n{_YELLOW('[Agent]')} Connecting to DataHub Agent Context Kit...")
         try:
             from datahub.sdk.main_client import DataHubClient
             from datahub_agent_context.langchain_tools import build_langchain_tools

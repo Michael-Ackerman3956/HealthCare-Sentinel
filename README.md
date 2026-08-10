@@ -40,27 +40,9 @@ Runs built-in clinical rules against the included SQLite database (55,500 patien
 
 **Pre-generated report:** Open `examples/triage-report.html` directly — no setup needed.
 
-### Option 1 — Google AI Studio (free, easiest)
+**Pick one LLM backend** — only one API key needed:
 
-1. Get a free API key at [aistudio.google.com/apikey](https://aistudio.google.com/apikey)
-2. Run:
-
-```bash
-export GOOGLE_API_KEY=AIza...
-SENTINEL_MODEL=gemini-2.0-flash python sentinel.py
-```
-
-### Option 2 — Anthropic Claude (best output quality, ~$0.80–1.50/run)
-
-1. Get an API key at [console.anthropic.com](https://console.anthropic.com/)
-2. Run:
-
-```bash
-export ANTHROPIC_API_KEY=sk-ant-...
-python sentinel.py
-```
-
-### Option 3 — Google Vertex AI (for GCP users)
+### Option 1 — Google Vertex AI (recommended)
 
 1. Enable the API and authenticate:
 
@@ -76,6 +58,30 @@ export GOOGLE_CLOUD_PROJECT=YOUR_PROJECT_ID
 export GOOGLE_GENAI_USE_VERTEXAI=1
 SENTINEL_MODEL=gemini-2.0-flash python sentinel.py
 ```
+
+<details><summary>Option 2 — Google AI Studio (free, no GCP needed)</summary>
+
+1. Get a free API key at [aistudio.google.com/apikey](https://aistudio.google.com/apikey)
+2. Run:
+
+```bash
+export GOOGLE_API_KEY=AIza...
+SENTINEL_MODEL=gemini-2.0-flash python sentinel.py
+```
+
+</details>
+
+<details><summary>Option 3 — Anthropic Claude (~$0.80–1.50/run)</summary>
+
+1. Get an API key at [console.anthropic.com](https://console.anthropic.com/)
+2. Run:
+
+```bash
+export ANTHROPIC_API_KEY=sk-ant-...
+python sentinel.py
+```
+
+</details>
 
 ### With DataHub (full agent mode)
 
@@ -111,14 +117,14 @@ python sentinel.py --reset
 
 # 1. First run — agent triages 55,500 patient records, finds 6 issues
 #    You'll see batch approval: approve with "all" or pick specific fixes
-SENTINEL_MODEL=gemini-3.5-flash python sentinel.py
+SENTINEL_MODEL=gemini-2.0-flash python sentinel.py
 
 # 2. New data arrives from "Clinic 2" (8,000 synthetic records, DIFFERENT issues)
 python sample-data/add_clinic2_patients.py
 
 # 3. Second run — agent recalls learnings from Run 1, triages new data
 #    Terminal shows: "Prior learnings found (2000 chars)"
-SENTINEL_MODEL=gemini-3.5-flash python sentinel.py
+SENTINEL_MODEL=gemini-2.0-flash python sentinel.py
 
 # 4. (Optional) Review audit trail
 python sentinel.py --history
