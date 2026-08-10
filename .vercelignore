@@ -1,0 +1,9 @@
+snapshots/
+report/
+docs/
+.venv/
+__pycache__/
+*.pyc
+healthcare.db
+.git/
+.claude/
