@@ -286,4 +286,3 @@ The agent autonomously discovers issues and ranks them by clinical severity. Fin
 ## License
 
 Apache 2.0 — see [LICENSE](LICENSE)
-
