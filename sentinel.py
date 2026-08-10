@@ -1984,6 +1984,10 @@ def main():
                         kept.append(f)
                         kept_keys.add(key)
 
+                # Re-collapse: reviewer may re-add downstream findings that
+                # Pass 1 already collapsed into source downstream_contamination
+                kept = collapse_downstream_findings(kept)
+
                 n_refuted = len(findings) - len([f for f in findings if (f.get("table"), f.get("check_name"), f.get("column")) not in refuted_keys])
                 n_added = len(kept) - len(findings) + n_refuted
                 print(f"\n  Reviewer: {n_refuted} refuted, {n_added} new, {len(kept)} total")
