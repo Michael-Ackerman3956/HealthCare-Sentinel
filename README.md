@@ -56,7 +56,7 @@ gcloud auth application-default login
 ```bash
 export GOOGLE_CLOUD_PROJECT=YOUR_PROJECT_ID
 export GOOGLE_GENAI_USE_VERTEXAI=1
-SENTINEL_MODEL=gemini-2.0-flash python sentinel.py
+SENTINEL_MODEL=gemini-2.5-pro python sentinel.py
 ```
 
 <details><summary>Option 2 — Google AI Studio (free, no GCP needed)</summary>
@@ -66,7 +66,7 @@ SENTINEL_MODEL=gemini-2.0-flash python sentinel.py
 
 ```bash
 export GOOGLE_API_KEY=AIza...
-SENTINEL_MODEL=gemini-2.0-flash python sentinel.py
+SENTINEL_MODEL=gemini-2.5-pro python sentinel.py
 ```
 
 </details>
@@ -117,14 +117,14 @@ python sentinel.py --reset
 
 # 1. First run — agent triages 55,500 patient records, finds 6 issues
 #    You'll see batch approval: approve with "all" or pick specific fixes
-SENTINEL_MODEL=gemini-2.0-flash python sentinel.py
+SENTINEL_MODEL=gemini-2.5-pro python sentinel.py
 
 # 2. New data arrives from "Clinic 2" (8,000 synthetic records, DIFFERENT issues)
 python sample-data/add_clinic2_patients.py
 
 # 3. Second run — agent recalls learnings from Run 1, triages new data
 #    Terminal shows: "Prior learnings found (2000 chars)"
-SENTINEL_MODEL=gemini-2.0-flash python sentinel.py
+SENTINEL_MODEL=gemini-2.5-pro python sentinel.py
 
 # 4. (Optional) Review audit trail
 python sentinel.py --history
