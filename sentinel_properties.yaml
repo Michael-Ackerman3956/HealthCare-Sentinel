@@ -1,0 +1,53 @@
+- id: sentinel.trust_score
+  qualified_name: sentinel.trust_score
+  type: string
+  cardinality: SINGLE
+  display_name: Sentinel Trust Score
+  description: "0-100 data quality score from Healthcare Sentinel (100=clean, 0=critically unsafe)"
+  entity_types:
+    - dataset
+
+- id: sentinel.worst_severity
+  qualified_name: sentinel.worst_severity
+  type: string
+  cardinality: SINGLE
+  display_name: Sentinel Worst Severity
+  description: "Worst finding severity: CRITICAL, HIGH, MEDIUM, LOW, or CLEAN"
+  entity_types:
+    - dataset
+
+- id: sentinel.finding_count
+  qualified_name: sentinel.finding_count
+  type: string
+  cardinality: SINGLE
+  display_name: Sentinel Finding Count
+  description: "Total data quality issues found on this dataset"
+  entity_types:
+    - dataset
+
+- id: sentinel.top_issue
+  qualified_name: sentinel.top_issue
+  type: string
+  cardinality: SINGLE
+  display_name: Sentinel Top Issue
+  description: "One-sentence description of the worst finding"
+  entity_types:
+    - dataset
+
+- id: sentinel.last_triage
+  qualified_name: sentinel.last_triage
+  type: string
+  cardinality: SINGLE
+  display_name: Sentinel Last Triage
+  description: "Date of last triage run (YYYY-MM-DD)"
+  entity_types:
+    - dataset
+
+- id: sentinel.remediation_status
+  qualified_name: sentinel.remediation_status
+  type: string
+  cardinality: SINGLE
+  display_name: Sentinel Remediation Status
+  description: "Summary of remediation actions taken"
+  entity_types:
+    - dataset

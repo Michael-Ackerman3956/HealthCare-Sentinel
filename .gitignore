@@ -1,0 +1,36 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+
+# Sample data (judges have these from DataHub's hackathon page)
+sample-data/*.db
+sample-data/fiction-retail-csv/
+sample-data/healthcare-csv/
+healthcare.db
+
+# Internal docs (research, competitor analysis, improvement notes)
+docs/
+
+# DataHub CLI
+.datahubenv
+
+# OS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Claude
+.claude/
+
+# Temp
+*.tmp
+
+# Snapshots (DB backups for undo)
+snapshots/
+
+# Reports (generated)
+report/

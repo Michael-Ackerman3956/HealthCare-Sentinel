@@ -1,0 +1,15 @@
+source:
+  type: sqlite
+  config:
+    platform_instance: healthcare
+    connect_uri: "sqlite:///sample-data/healthcare.db"
+    include_tables: true
+    include_views: true
+    profiling:
+      enabled: true
+      profile_table_level_only: false
+
+sink:
+  type: datahub-rest
+  config:
+    server: "http://localhost:8080"

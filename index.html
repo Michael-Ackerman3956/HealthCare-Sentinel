@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Healthcare Sentinel — Clinical Data Triage Agent</title>
+<style>
+:root{
+  --blue:#1890FF;
+  --blue-light:rgba(24,144,255,0.10);
+  --mustard:#D4A843;
+  --mustard-light:rgba(212,168,67,0.10);
+  --mustard-border:rgba(212,168,67,0.18);
+  --bg:#0D0F11;
+  --bg-card:#161819;
+  --border:#232629;
+  --text:#E8EAED;
+  --text-secondary:#7D8590;
+  --text-dim:#484F58;
+  --mono:ui-monospace,'SF Mono','Cascadia Mono',Menlo,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,'Inter',system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+/* NAV */
+nav{display:flex;align-items:center;justify-content:space-between;padding:20px 64px;position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(13,15,17,0.8);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.logo{font-size:16px;font-weight:700;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:10px}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--blue)}
+.nav-right{display:flex;align-items:center;gap:24px}
+.nav-right a{font-size:13px;color:var(--text-secondary);text-decoration:none;font-weight:500;transition:color .2s} .nav-right a:hover{color:var(--text)}
+.nav-cta{padding:7px 18px;background:var(--blue);color:#fff;border-radius:6px;font-size:13px;font-weight:600;text-decoration:none;transition:opacity .2s} .nav-cta:hover{opacity:.85}
+
+/* LAYOUT — single centered column */
+.wrap{max-width:720px;margin:0 auto;padding:0 24px}
+
+/* HERO */
+.hero{text-align:center;padding:120px 24px 64px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:600;color:var(--mustard);background:var(--mustard-light);border:1px solid var(--mustard-border);padding:6px 16px;border-radius:999px;margin-bottom:20px}
+.hero-badge::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--mustard)}
+.hero h1{font-size:44px;font-weight:800;letter-spacing:-.04em;line-height:1.12;color:var(--text);max-width:600px;margin:0 auto}
+.hero h1 em{font-style:normal;color:var(--blue)}
+.hero>p{font-size:17px;color:var(--text-secondary);margin-top:16px;line-height:1.7;max-width:480px;margin-left:auto;margin-right:auto}
+.hero-buttons{margin-top:28px;display:flex;gap:12px;justify-content:center}
+.btn{padding:13px 28px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;transition:all .2s;border:none;cursor:pointer}
+.btn-primary{background:var(--blue);color:#fff} .btn-primary:hover{opacity:.9}
+.btn-ghost{background:transparent;color:var(--text-secondary);border:1px solid var(--border)} .btn-ghost:hover{color:var(--text);border-color:var(--text-dim)}
+
+/* SECTION */
+.section{padding:64px 0;border-top:1px solid var(--border)}
+.section-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--blue);margin-bottom:12px}
+.section-label.mustard{color:var(--mustard)}
+.section h2{font-size:30px;font-weight:800;letter-spacing:-.03em;line-height:1.2;color:var(--text)}
+.section>p,.section .desc{font-size:15px;color:var(--text-secondary);margin-top:10px;line-height:1.7;max-width:560px}
+.section .visual{margin-top:28px}
+
+/* TERMINAL */
+.term{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;overflow:hidden;width:100%}
+.term-bar{display:flex;align-items:center;gap:6px;padding:12px 16px;border-bottom:1px solid var(--border)}
+.term-dot{width:9px;height:9px;border-radius:50%}
+.term-dot:nth-child(1){background:#FF5F57} .term-dot:nth-child(2){background:#FEBC2E} .term-dot:nth-child(3){background:#28C840}
+.term-body{padding:20px 24px;font-family:var(--mono);font-size:12.5px;line-height:1.85;color:var(--text-dim)}
+.term-body .b{color:var(--blue)} .term-body .w{color:var(--text)} .term-body .g{color:#28C840} .term-body .m{color:var(--mustard)}
+
+/* STAT ROWS */
+.stat-stack{display:flex;flex-direction:column;gap:10px}
+.stat-row{display:flex;align-items:center;gap:24px;padding:20px 24px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px}
+.stat-row .n{font-size:32px;font-weight:800;color:var(--mustard);font-family:var(--mono);min-width:80px;line-height:1}
+.stat-row .l{font-size:14px;font-weight:600;color:var(--text)}
+.stat-row .d{font-size:13px;color:var(--text-secondary);margin-top:2px}
+
+/* PHASE ROWS */
+.phase-stack{display:flex;flex-direction:column;gap:6px}
+.phase-row{display:flex;align-items:center;gap:14px;padding:14px 20px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px}
+.phase-n{font-size:12px;font-weight:800;color:var(--mustard);font-family:var(--mono);min-width:14px}
+.phase-name{font-size:14px;font-weight:700;color:var(--text);min-width:85px}
+.phase-desc{font-size:13px;color:var(--text-secondary);flex:1}
+.phase-tool{font-size:11px;color:var(--blue);font-family:var(--mono);background:var(--blue-light);padding:2px 8px;border-radius:4px;white-space:nowrap}
+
+/* STACK PILLS */
+.stack-list{display:flex;flex-direction:column;gap:8px}
+.stack-item{padding:16px 20px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;font-size:14px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:12px}
+.stack-dot{width:8px;height:8px;border-radius:50%;background:var(--blue);flex-shrink:0}
+
+/* FOOTER */
+footer{padding:36px 24px;border-top:1px solid var(--border);text-align:center;font-size:13px;color:var(--text-dim);max-width:720px;margin:0 auto}
+footer a{color:var(--blue);text-decoration:none}
+
+/* CTA */
+.cta{text-align:center;padding:56px 0;border-top:1px solid var(--border)}
+.cta h2{font-size:30px;font-weight:800;letter-spacing:-.03em;line-height:1.2}
+.cta h2 em{font-style:normal;color:var(--blue)}
+.cta p{font-size:15px;color:var(--text-secondary);margin-top:10px}
+.cta .hero-buttons{margin-top:24px}
+
+@media(max-width:600px){
+  nav{padding:16px 20px}
+  .hero{padding:100px 20px 48px}
+  .hero h1{font-size:30px}
+  .wrap{padding:0 16px}
+  .section h2{font-size:24px}
+  .stat-row .n{font-size:26px;min-width:64px}
+  .phase-tool{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo"><span class="logo-dot"></span>Healthcare Sentinel</a>
+  <div class="nav-right">
+    <a href="https://datahub.devpost.com/">Hackathon</a>
+    <a href="https://datahub.com">DataHub</a>
+    <a href="https://github.com/Michael-Ackerman3956/HealthCare-Sentinel" class="nav-cta">GitHub</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <span class="hero-badge">Built with DataHub Agent Context Kit</span>
+  <h1>Data quality ranked by <em>patient harm</em>.</h1>
+  <p>An autonomous agent that discovers healthcare datasets, scans for quality issues, and writes findings back to DataHub.</p>
+  <div class="hero-buttons">
+    <a href="https://github.com/Michael-Ackerman3956/HealthCare-Sentinel" class="btn btn-primary">Get Started</a>
+    <a href="examples/triage-report.html" class="btn btn-ghost">Sample Report</a>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- DISCOVER -->
+  <div class="section">
+    <div class="section-label">Discover</div>
+    <h2>Finds datasets you didn't point it at.</h2>
+    <p class="desc">No hardcoded tables. The agent searches your DataHub catalog, reads schemas, and decides what to check — autonomously.</p>
+    <div class="visual">
+      <div class="term">
+        <div class="term-bar"><div class="term-dot"></div><div class="term-dot"></div><div class="term-dot"></div></div>
+        <div class="term-body">
+          <span class="b">$</span> <span class="w">python sentinel.py</span><br>
+          <span class="b">[Agent]</span> 10 DataHub tools loaded.<br><br>
+          <span class="b">  &rarr; search</span>({"query": "*"})<br>
+          <span class="g">    Found 7 datasets</span><br><br>
+          <span class="b">  &rarr; list_schema_fields</span>(raw_patients)<br>
+          <span class="g">    15 columns discovered</span><br><br>
+          <span class="b">  &rarr; run_sql</span>("SELECT COUNT(*) WHERE age &gt; 120 OR age &lt; 0")<br>
+          <span class="m">    832 rows flagged</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REASON -->
+  <div class="section">
+    <div class="section-label mustard">Reason</div>
+    <h2>Not row counts. Patient harm.</h2>
+    <p class="desc">The agent explains why age=-88 means a fatal drug dose — not just "832 rows out of range." Every finding is ranked CRITICAL, HIGH, MEDIUM, or LOW by clinical impact.</p>
+    <div class="visual">
+      <div class="stat-stack">
+        <div class="stat-row">
+          <div class="n">832</div>
+          <div><div class="l">Impossible Ages</div><div class="d">Ages like -88 cause fatal drug dosing errors</div></div>
+        </div>
+        <div class="stat-row">
+          <div class="n">555</div>
+          <div><div class="l">Missing Names</div><div class="d">Patients unidentifiable in emergency triage</div></div>
+        </div>
+        <div class="stat-row">
+          <div class="n">277</div>
+          <div><div class="l">Date Violations</div><div class="d">Discharged before admitted</div></div>
+        </div>
+        <div class="stat-row">
+          <div class="n">1,215</div>
+          <div><div class="l">Billing Errors</div><div class="d">Negative amounts corrupt revenue reporting</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRACE -->
+  <div class="section">
+    <div class="section-label">Trace</div>
+    <h2>Bad data doesn't stay in one table.</h2>
+    <p class="desc">The agent follows DataHub lineage to find every downstream table contaminated by upstream issues. Tags propagate to all affected datasets.</p>
+    <div class="visual">
+      <div class="term">
+        <div class="term-bar"><div class="term-dot"></div><div class="term-dot"></div><div class="term-dot"></div></div>
+        <div class="term-body">
+          <span class="b">  &rarr; get_lineage</span>(raw_patients)<br><br>
+          <span class="w">  raw_patients</span><br>
+          &nbsp;&nbsp;├── <span class="m">patient_encounters</span><br>
+          &nbsp;&nbsp;├── <span class="m">billing_summary</span><br>
+          &nbsp;&nbsp;└── <span class="m">readmission_mart</span><br><br>
+          <span class="g">  3 downstream tables contaminated</span><br>
+          <span class="g">  Tagging all with severity-CRITICAL</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GOVERN -->
+  <div class="section">
+    <div class="section-label mustard">Govern</div>
+    <h2>Reads alone. Writes with permission.</h2>
+    <p class="desc">The agent discovers and investigates autonomously, but asks before writing tags or descriptions to DataHub. Built for healthcare governance.</p>
+    <div class="visual">
+      <div class="term">
+        <div class="term-bar"><div class="term-dot"></div><div class="term-dot"></div><div class="term-dot"></div></div>
+        <div class="term-body">
+          <span class="b">  BATCH APPROVAL — 4 operation(s)</span><br><br>
+          <span class="w">  1.</span> [correct] raw_patients (832 rows)<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-dim">Nullify impossible ages</span><br>
+          <span class="w">  2.</span> [quarantine] raw_patients (555 rows)<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-dim">Quarantine missing names</span><br>
+          <span class="w">  3.</span> [correct] raw_patients (277 rows)<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-dim">Fix swapped dates</span><br>
+          <span class="w">  4.</span> [correct] raw_patients (1,215 rows)<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-dim">Nullify negative billing</span><br><br>
+          <span class="w">  Approve which? [all / 1,3 / none]</span> <span class="g">all</span><br>
+          <span class="g">  &rarr; 4 APPROVED, 0 DENIED</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REMEDIATE -->
+  <div class="section">
+    <div class="section-label mustard">Remediate</div>
+    <h2>Finds issues. Then fixes them.</h2>
+    <p class="desc">The agent proposes data fixes — correct, quarantine, flag, standardize, deduplicate, enrich. Every operation is snapshotted and fully reversible.</p>
+    <div class="visual">
+      <div class="term">
+        <div class="term-bar"><div class="term-dot"></div><div class="term-dot"></div><div class="term-dot"></div></div>
+        <div class="term-body">
+          <span class="b">  &rarr; apply_fix</span>(correct, raw_patients)<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="m">UPDATE raw_patients SET age=NULL WHERE age&lt;0</span><br><br>
+          <span class="w">  Will correct 832 rows — Approve? [y/N]</span> <span class="g">y</span><br>
+          <span class="g">  OK: 832 rows corrected. Snapshot: _snap_1</span><br>
+          <span class="g">  Undo: python sentinel.py --undo 1</span><br><br>
+          <span class="b">  &rarr; apply_fix</span>(quarantine, raw_patients)<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="m">Move 555 missing-name rows to quarantine</span><br><br>
+          <span class="w">  Approve? [y/N]</span> <span class="g">y</span><br>
+          <span class="g">  OK: 555 rows quarantined. Snapshot: _snap_2</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UNDO -->
+  <div class="section">
+    <div class="section-label">Reversibility</div>
+    <h2>Every change undoable.</h2>
+    <p class="desc">Full database snapshot before every run. Row-level snapshots before every fix. Audit trail of who approved what, and why.</p>
+    <div class="visual">
+      <div class="term">
+        <div class="term-bar"><div class="term-dot"></div><div class="term-dot"></div><div class="term-dot"></div></div>
+        <div class="term-body">
+          <span class="b">$</span> <span class="w">python sentinel.py --history</span><br><br>
+          <span class="w">  ID  Type        Table         Rows  Status</span><br>
+          <span class="w">  ——  ————        —————         ————  ——————</span><br>
+          &nbsp;&nbsp;<span class="m"> 1</span>  correct     raw_patients   832  ACTIVE<br>
+          &nbsp;&nbsp;<span class="m"> 2</span>  quarantine  raw_patients   555  ACTIVE<br><br>
+          <span class="b">$</span> <span class="w">python sentinel.py --undo 1</span><br>
+          <span class="g">  UNDONE: 832 rows restored from snapshot.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WATCH -->
+  <div class="section">
+    <div class="section-label mustard">Watch</div>
+    <h2>Drop a file. Agent handles the rest.</h2>
+    <p class="desc">Background mode watches a folder for new or changed CSVs. Classifies each change and runs the right pipeline mode automatically.</p>
+    <div class="visual">
+      <div class="stat-stack">
+        <div class="stat-row">
+          <div class="n" style="font-size:16px;min-width:120px;color:var(--mustard)">NEW FILE</div>
+          <div><div class="l">Full 8-phase triage</div></div>
+        </div>
+        <div class="stat-row">
+          <div class="n" style="font-size:16px;min-width:120px;color:var(--mustard)">SCHEMA</div>
+          <div><div class="l">Flag breaking change + full triage</div></div>
+        </div>
+        <div class="stat-row">
+          <div class="n" style="font-size:16px;min-width:120px;color:var(--mustard)">APPEND</div>
+          <div><div class="l">Incremental checks on new rows</div></div>
+        </div>
+        <div class="stat-row">
+          <div class="n" style="font-size:16px;min-width:120px;color:var(--mustard)">UPDATE</div>
+          <div><div class="l">Re-run + diff: 3 new, 2 resolved, 5 recurring</div></div>
+        </div>
+        <div class="stat-row">
+          <div class="n" style="font-size:16px;min-width:120px;color:var(--text-dim)">NO-OP</div>
+          <div><div class="l" style="color:var(--text-dim)">Skip — nothing changed</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PIPELINE -->
+  <div class="section">
+    <div class="section-label">Pipeline</div>
+    <h2>9 phases. Full triage lifecycle.</h2>
+    <p class="desc">From recalling past learnings to saving new ones — the agent runs the full triage lifecycle using DataHub's own tools.</p>
+    <div class="visual">
+      <div class="phase-stack">
+        <div class="phase-row"><span class="phase-n">0</span><span class="phase-name">Recall</span><span class="phase-desc">Read past learnings</span><span class="phase-tool">search_documents</span></div>
+        <div class="phase-row"><span class="phase-n">1</span><span class="phase-name">Discover</span><span class="phase-desc">Find datasets</span><span class="phase-tool">search</span></div>
+        <div class="phase-row"><span class="phase-n">2</span><span class="phase-name">Understand</span><span class="phase-desc">Read schemas</span><span class="phase-tool">list_schema_fields</span></div>
+        <div class="phase-row"><span class="phase-n">3</span><span class="phase-name">Investigate</span><span class="phase-desc">Run SQL checks</span><span class="phase-tool">run_sql</span></div>
+        <div class="phase-row"><span class="phase-n">4</span><span class="phase-name">Trace</span><span class="phase-desc">Follow lineage</span><span class="phase-tool">get_lineage</span></div>
+        <div class="phase-row"><span class="phase-n">5</span><span class="phase-name">Assess</span><span class="phase-desc">Rank severity</span><span class="phase-tool">LLM</span></div>
+        <div class="phase-row"><span class="phase-n">6</span><span class="phase-name">Record</span><span class="phase-desc">Write to DataHub</span><span class="phase-tool">add_tags</span></div>
+        <div class="phase-row"><span class="phase-n">7</span><span class="phase-name">Remediate</span><span class="phase-desc">Fix data with HITL</span><span class="phase-tool">apply_fix</span></div>
+        <div class="phase-row"><span class="phase-n">8</span><span class="phase-name">Learn</span><span class="phase-desc">Save for next run</span><span class="phase-tool">save_document</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STACK -->
+  <div class="section">
+    <div class="section-label mustard">Stack</div>
+    <h2>1,900+ lines. 83 tests. Multi-model.</h2>
+    <p class="desc">Agent Context Kit for discovery and writeback. LangGraph for the ReAct loop and human-in-the-loop. Two model options depending on cost and capability needs.</p>
+    <div class="visual">
+      <div class="stack-list">
+        <div class="stack-item"><span class="stack-dot"></span>DataHub Agent Context Kit (10 tools)</div>
+        <div class="stack-item"><span class="stack-dot"></span>LangGraph (ReAct + HITL + checkpoints)</div>
+        <div class="stack-item"><span class="stack-dot" style="background:var(--mustard)"></span>Claude Haiku 4.5 (~$0.80-1.50/run)</div>
+        <div class="stack-item"><span class="stack-dot" style="background:var(--mustard)"></span>Gemini 2.5 Pro (~$1.00-2.00/run)</div>
+        <div class="stack-item"><span class="stack-dot"></span>SQLite (data + audit trail)</div>
+        <div class="stack-item"><span class="stack-dot"></span>83 tests (test_sentinel.py)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta">
+    <h2>Try it in <em>60 seconds</em>.</h2>
+    <p>Clone the repo. Point it at DataHub. Get a clinical triage report.</p>
+    <div class="hero-buttons">
+      <a href="https://github.com/Michael-Ackerman3956/HealthCare-Sentinel" class="btn btn-primary">View on GitHub</a>
+      <a href="examples/triage-report.html" class="btn btn-ghost">Sample Report</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Healthcare Sentinel &mdash; <a href="https://datahub.devpost.com/">Build with DataHub Hackathon</a> &mdash; <a href="https://github.com/Michael-Ackerman3956/HealthCare-Sentinel">GitHub</a> &mdash; Apache 2.0
+</footer>
+
+</body>
+</html>
